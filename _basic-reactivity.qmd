@@ -1,0 +1,244 @@
+
+
+## Initial state
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot))
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Calculate scatter plot
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot))
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  classDef changed fill:#f96
+```
+
+## Calculate scatter plot
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot))
+  linkStyle 2 display:none
+  classDef changed fill:#f96
+```
+
+## Calculate distribution
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot)):::changed
+  linkStyle 2 display:none
+  classDef changed fill:#f96
+```
+
+## Calculate distribution
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot)):::changed
+  classDef changed fill:#f96
+```
+
+
+## Reactive graph
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+    Sl[Slider]  --> Sc 
+  Sl --> M((Dist Plot))
+```
+
+
+## Slider changes
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider]:::changed --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```
+
+## Invalidated
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider]:::changed --> Sc 
+  Sl --> M((Dist Plot)):::changed
+  
+  classDef changed fill:#f96
+```
+
+## Forget dependencies
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot)):::changed
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot)):::changed
+  
+  classDef changed fill:#f96
+```
+
+## Updated
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```
+
+## Checkbox changes
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox]:::changed --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```
+
+## Invalidated
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox]:::changed --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```
+
+## Forget dependencies
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+```
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+```
+
+## Recalculate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot)):::changed
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```
+
+## Updated
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Checkbox] --> Sc((Scatter\nPlot))
+  Sl[Slider] --> Sc 
+  Sl --> M((Dist Plot))
+  
+  classDef changed fill:#f96
+```

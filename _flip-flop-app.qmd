@@ -1,0 +1,287 @@
+
+
+
+## Different graphs   
+
+```{.python}
+@render.text
+def txt():
+    random_number = random.randint(0, 100)
+    if input.choice() == "Slider 1":
+        return f"Slider 1 is {input.slider_1()}, a random number is {random_number}"
+    else: 
+        return f"Slider 2 is {input.slider_2()}, a random number is {random_number}"
+```
+
+## Initial state
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Calculate Text
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch button value
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons]:::changed --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch Slider 1
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1]:::changed --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Complete
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Slider 2 changes
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2]:::changed --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Nothing happens
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Slider 1 changes
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1]:::changed --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Invalidate 
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1]:::changed --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+
+  classDef changed fill:#f96
+```
+
+## Calculate Text
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch button value
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons]:::changed --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch Slider 1
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1]:::changed --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Complete
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Buttons change
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons]:::changed --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+
+## Invalidate
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons]:::changed --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Calculate Text
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch button value
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons]:::changed --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Fetch Slider 2!
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output)):::changed
+  S1[Slider 1] --> T 
+  S2[Slider 2]:::changed --> T
+
+  linkStyle 1 display:none
+  
+  classDef changed fill:#f96
+```
+
+## Different graph
+
+```{mermaid}
+%%| fig-width: 6
+flowchart TD
+  C[Buttons] --> T((Text Output))
+  S1[Slider 1] --> T 
+  S2[Slider 2] --> T
+
+  linkStyle 1 display:none
+  
+  classDef changed fill:#f96
+```

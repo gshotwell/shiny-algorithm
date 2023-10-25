@@ -1,0 +1,222 @@
+## Initial state
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Calculate table
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Calculate table
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 2 display:none
+```
+
+## Calculate sample
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]:::changed
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 2 display:none
+```
+
+## Calculate sample
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]:::changed
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+## Calculate plot
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]:::changed
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+## Calculate plot
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]:::changed
+  
+  classDef changed fill:#f96
+```
+
+## Deep reactive graph
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+```
+
+## Slider changes
+
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider]:::changed --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+```
+
+## Invalidated
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider]:::changed --> S[Sample]:::changed
+  S --> T[Table]
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+```
+
+## Invalidated
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider]:::changed --> S[Sample]:::changed
+  S --> T[Table]:::changed
+  S --> P[Plot]:::changed
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate table
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 1 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate table
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate sample
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]:::changed
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 0 display:none
+  linkStyle 2 display:none
+```
+
+## Recalculate sample
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]:::changed
+  S --> T[Table]:::changed
+  S --> P[Plot]
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+## Recalculate plot
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]:::changed
+  
+  classDef changed fill:#f96
+  linkStyle 2 display:none
+```
+
+## Recalculate plot
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]:::changed
+  
+  classDef changed fill:#f96
+```
+
+## Updated
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  Sl[Slider] --> S[Sample]
+  S --> T[Table]
+  S --> P[Plot]
+  classDef changed fill:#f96
+```
