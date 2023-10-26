@@ -26,7 +26,7 @@ def include_qmd(path):
     - Often incorrect!
 - Why can't we do it ourselves?
 - Tension between speed an quality
-    - Don't want to spend a bunch of time on something that's not your job
+    - Must be quick to develop
     - Don't want to own a product that's hard to maintain
 
 ## Example: Feature API
@@ -52,7 +52,7 @@ def include_qmd(path):
 # | echo: false
 # | output: asis
 include_shiny_folder(
-    "apps/basic-app",
+    "apps/ml-example-1",
     components="viewer",
     viewer_height=500,
 )
@@ -61,16 +61,20 @@ include_shiny_folder(
 ## How did Shiny do that?
 
 ```{.python}
-def server(input):
     @render.plot
-    def dist():
-        filtered = df.loc[df["body_mass"] < input.mass()]
-        return dist_plot(filtered)
+    def score_dist():
+        df_filtered = df[df["account"] == input.account()]
+        return dist_plot(df_filtered)
 
     @render.plot
-    def scatter():
-        filtered = df.loc[df["body_mass"] < input.mass()]
-        return scatter_plot(filtered, input.trend())
+    def metric():
+        df_filtered = df[df["account"] == input.account()]
+        if input.metric() == "ROC Curve":
+            return plot_auc_curve(df_filtered, "is_electronics", "training_score")
+        else:
+            return plot_precision_recall_curve(
+                df_filtered, "is_electronics", "training_score"
+            )
 ```
 
 - We told Shiny _what_ to do
@@ -105,33 +109,10 @@ def server(input):
 # | echo: false
 # | output: asis
 include_shiny_folder(
-    "apps/dynamic-ui",
+    "apps/todo-list",
     components="viewer",
     viewer_height=500,
 )
-```
-
-## Static code analysis
-
-```{.python}
-choices = [
-    "ui.input_text('txt_input', 'A text input')",
-    "ui.input_numeric('number', 'A numeric input', value = 0.5)",
-]
-app_ui = ui.page_fluid(
-    ui.input_select("selector", "Select an input", choices=choices),
-    ui.output_ui("result"),
-    ui.output_text("txt"),
-)
-
-
-def server(input: Inputs, output: Outputs, session: Session):
-    @output
-    @render.ui
-    def result():
-        input_str = input.selector()
-        input_obj = eval(input_str)
-        return input_obj
 ```
 
 ## Runtime tracing
@@ -142,8 +123,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
 ## Outputs and recipes
 
-
-```{.python code-line-numbers="5,11"}
+```{.python code-line-numbers="5"}
 from shiny import Inputs, Outputs, Session, App, render, ui
 
 app_ui = ui.page_fluid(
@@ -152,7 +132,44 @@ app_ui = ui.page_fluid(
 )
 
 def server(input: Inputs, output: Outputs, session: Session):
-    @output
+    @render.text
+    def txt():
+        return f"n*2 is {input.n() * 2}"
+
+
+app = App(app_ui, server)
+```
+
+## Outputs and recipes
+
+```{.python code-line-numbers="10"}
+from shiny import Inputs, Outputs, Session, App, render, ui
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "N", 0, 100, 20),
+    ui.output_text_verbatim("txt"),
+)
+
+def server(input: Inputs, output: Outputs, session: Session):
+    @render.text
+    def txt():
+        return f"n*2 is {input.n() * 2}"
+
+
+app = App(app_ui, server)
+```
+
+## Outputs and recipes
+
+```{.python code-line-numbers="11"}
+from shiny import Inputs, Outputs, Session, App, render, ui
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "N", 0, 100, 20),
+    ui.output_text_verbatim("txt"),
+)
+
+def server(input: Inputs, output: Outputs, session: Session):
     @render.text
     def txt():
         return f"n*2 is {input.n() * 2}"
@@ -163,7 +180,7 @@ app = App(app_ui, server)
 
 ## Recipes and inputs
 
-```{.python code-line-numbers="4,13"}
+```{.python code-line-numbers="4"}
 from shiny import Inputs, Outputs, Session, App, render, ui
 
 app_ui = ui.page_fluid(
@@ -173,7 +190,6 @@ app_ui = ui.page_fluid(
 
 
 def server(input: Inputs, output: Outputs, session: Session):
-    @output
     @render.text
     def txt():
         return f"n*2 is {input.n() * 2}"
@@ -188,7 +204,7 @@ app = App(app_ui, server)
 ```{mermaid}
 %%| fig-width: 2
 flowchart TD
-  S[Slider] --> R{Recipe}
+  S[Slider] --> R{Render}
   R --> Sc((Text))
 ```
 
@@ -211,7 +227,7 @@ include_qmd("_basic-reactivity.qmd")
 # | echo: false
 # | output: asis
 include_shiny_folder(
-    "apps/dynamic-ui",
+    "apps/flip-flop",
     components="viewer",
     viewer_height=500,
 )
