@@ -4,8 +4,8 @@
 flowchart TD
   D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
-  Sa --> F{{Filtered}}
   A[Account] --> F
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -20,8 +20,8 @@ flowchart TD
 flowchart TD
   D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
-  Sa --> F{{Filtered}}
   A[Account] --> F
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores)):::changed
   F --> P1((API\nResponse))
   
@@ -36,8 +36,8 @@ flowchart TD
 flowchart TD
   D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
-  Sa --> F{{Filtered}}:::changed
   A[Account] --> F
+  Sa --> F{{Filtered}}:::changed
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -199,7 +199,7 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa{{Sample}}:::changed
+  D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
   A[Account]:::changed  --> F
   Sa --> F{{Filtered}}
@@ -216,7 +216,7 @@ flowchart TD
 flowchart TD
   D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
-  A[Account]:::changed  --> F
+  A[Account]  --> F
   Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse)):::changed
@@ -232,6 +232,189 @@ flowchart TD
   D[Dates] --> Sa{{Sample}}
   S[Sample Size] --> Sa
   A[Account]  --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+```
+
+## Sample size changes
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size]:::changed --> Sa
+  A[Account]  --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+
+```
+
+## Invalidate Sample
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}:::changed 
+  S[Sample Size] --> Sa
+  A[Account]  --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1 display:none
+```
+
+## Invalidate Filter
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account]  --> F
+  Sa --> F{{Filtered}}:::changed 
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,2,3 display:none
+```
+
+## Invalidate plots
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account]  --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores)):::changed 
+  F --> P1((API\nResponse)):::changed 
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,2,3,4,5 display:none
+```
+
+## Initial state
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,2,3,4,5 display:none
+```
+
+## Generate Model Scores
+
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores)):::changed
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,2,3,4,5 display:none
+```
+
+## Get filtered Reactive Calc
+
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}:::changed
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,2,3,5 display:none
+```
+
+## Get Account input
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account]:::changed --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,3,5 display:none
+```
+
+## Get Sample Reactive Calc
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}:::changed 
+  S[Sample Size] --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 0,1,5 display:none
+```
+
+## Get Other inputs
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates]:::changed  --> Sa{{Sample}}
+  S[Sample Size]:::changed  --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse))
+  
+  classDef changed fill:#f96
+  linkStyle 5 display:none
+```
+
+## Plot API Responses
+
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account] --> F
+  Sa --> F{{Filtered}}
+  F --> P2((Model\nScores))
+  F --> P1((API\nResponse)):::changed 
+  
+  classDef changed fill:#f96
+  linkStyle 5 display:none
+```
+
+## Get Filter reactive calc
+
+```{mermaid}
+%%| fig-width: 4
+flowchart TD
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  A[Account] --> F
   Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))

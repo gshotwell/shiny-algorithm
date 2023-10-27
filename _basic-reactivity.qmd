@@ -73,7 +73,7 @@ flowchart TD
 ```
 
 
-## Account\nSelector changes
+## Account changes
 
 ```{mermaid}
 %%| fig-width: 6
@@ -172,7 +172,7 @@ flowchart TD
   classDef changed fill:#f96
 ```
 
-## Metric\nSelector changes
+## Metric changes
 ```{mermaid}
 %%| fig-width: 6
 flowchart TD
