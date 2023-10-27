@@ -57,35 +57,10 @@ monitoring_tab = ui.nav(
     ),
 )
 
-annotation_tab = ui.nav(
-    "Data Annotation",
-    ui.row(
-        ui.layout_column_wrap(
-            1 / 2,
-            ui.card(ui.card_header("Results"), ui.output_data_frame("results")),
-            ui.card(
-                ui.card_header("Annotate"),
-                ui.output_text("to_review"),
-                ui.card_footer(
-                    ui.layout_column_wrap(
-                        1 / 2,
-                        ui.input_action_button(
-                            "is_electronics", "Electronics", class_="btn btn-primary"
-                        ),
-                        ui.input_action_button(
-                            "not_electronics",
-                            "Not Electronics",
-                            class_="btn btn-secondary",
-                        ),
-                    ),
-                ),
-            ),
-        )
-    ),
-)
-
-app_ui = ui.page_sidebar(
-    ui.sidebar(
+app_ui = ui.page_navbar(
+    training_tab,
+    monitoring_tab,
+    sidebar=ui.sidebar(
         ui.input_select(
             "account",
             "Account",
@@ -93,7 +68,8 @@ app_ui = ui.page_sidebar(
                 "Berge & Berge",
                 "Fritsch & Fritsch",
                 "Hintz & Hintz",
-                "Mosciski and Sons" "Wolff Ltd",
+                "Mosciski and Sons",
+                "Wolff Ltd",
             ],
         ),
         ui.panel_conditional(
@@ -106,14 +82,9 @@ app_ui = ui.page_sidebar(
             ),
             ui.input_numeric("sample", "Sample Size", value=10000, step=5000),
         ),
+        width="300px",
     ),
-    ui.navset_bar(
-        training_tab,
-        monitoring_tab,
-        annotation_tab,
-        title="Options",
-        id="tabs",
-    ),
+    id="tabs",
 )
 
 
@@ -151,7 +122,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         return out
 
     @reactive.Calc()
-    def filtered_data():
+    def filtered_data() -> pd.DataFrame:
         sample_df = sampled_data()
         sample_df = sample_df.loc[sample_df["account"] == input.account()]
         return sample_df.reset_index(drop=True)
@@ -163,40 +134,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.plot
     def prod_score_dist():
         return plot_score_distribution(filtered_data())
-
-    # Annotation tab
-
-    @render.data_frame
-    def results():
-        return render.DataGrid(
-            filtered_data()[["text", "prod_score"]],
-            width="100%",
-            row_selection_mode="single",
-            filters=True,
-        )
-
-    @reactive.Calc
-    def selected_row():
-        rows = list(req(input.results_selected_rows()))
-        return filtered_data().loc[rows[0]]
-
-    @render.text
-    def to_review():
-        return selected_row()["text"]
-
-    @reactive.Effect
-    @reactive.event(input.is_electronics)
-    def _():
-        update_annotation(df(), id=selected_row()["id"], annotation="electronics")
-
-    @reactive.Effect
-    @reactive.event(input.not_electronics)
-    def _():
-        update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
-
-    def update_annotation(current_df, id: str, annotation: str):
-        current_df.loc[current_df["id"] == id, "annotation"] = annotation
-        current_df.to_csv(Path(__file__).parent / "simulated-data.csv", index=False)
 
 
 app = App(app_ui, server)

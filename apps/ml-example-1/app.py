@@ -1,51 +1,78 @@
-from shiny import Inputs, Outputs, Session, App, ui, render
+from shiny import Inputs, Outputs, Session, App, ui, render, reactive, req
 import pandas as pd
 from pathlib import Path
-from plots import dist_plot, plot_auc_curve, plot_precision_recall_curve
+from plots import (
+    plot_score_distribution,
+    plot_auc_curve,
+    plot_precision_recall_curve,
+    plot_api_response,
+)
+
+file_path = Path(__file__).parent / "simulated-data.csv"
 
 
-df = pd.read_csv(Path(__file__).parent / "simulated-data.csv")
+@reactive.file_reader(file_path, interval_secs=0.2)
+def df():
+    out = pd.read_csv(file_path)
+    out["date"] = pd.to_datetime(out["date"], errors="coerce")
+    return out
 
-app_ui = ui.page_sidebar(
-    ui.sidebar(
-        ui.input_select("account", "Account", choices=df["account"].unique().tolist())
-    ),
-    ui.navset_bar(
-        ui.nav(
-            "Training dashboard",
-            ui.row(
-                ui.layout_column_wrap(
-                    1 / 2,
-                    ui.card(
-                        ui.card_header("Model Metrics"),
-                        ui.output_plot("metric"),
-                        ui.input_select(
-                            "metric",
-                            "Metric",
-                            choices=["ROC Curve", "Precision-Recall"],
-                        ),
-                    ),
-                    ui.card(
-                        ui.card_header("Score distribution"),
-                        ui.output_plot("score_dist"),
-                    ),
+
+training_tab = ui.nav(
+    "Training Dashboard",
+    ui.row(
+        ui.layout_column_wrap(
+            1 / 2,
+            ui.card(
+                ui.card_header("Model Metrics"),
+                ui.output_plot("metric"),
+                ui.input_select(
+                    "metric",
+                    "Metric",
+                    choices=["ROC Curve", "Precision-Recall"],
                 ),
             ),
+            ui.card(
+                ui.card_header("Training Scores"),
+                ui.output_plot("score_dist"),
+            ),
         ),
-        title="",
     ),
+)
+
+app_ui = ui.page_navbar(
+    training_tab,
+    sidebar=ui.sidebar(
+        ui.input_select(
+            "account",
+            "Account",
+            choices=[
+                "Berge & Berge",
+                "Fritsch & Fritsch",
+                "Hintz & Hintz",
+                "Mosciski and Sons",
+                "Wolff Ltd",
+            ],
+        ),
+        width="300px",
+    ),
+    id="tabs",
 )
 
 
 def server(input: Inputs, output: Outputs, session: Session):
+    # Training dashboard
+
     @render.plot
     def score_dist():
-        df_filtered = df[df["account"] == input.account()]
-        return dist_plot(df_filtered)
+        df_value = df()
+        df_filtered = df_value[df_value["account"] == input.account()]
+        return plot_score_distribution(df_filtered)
 
     @render.plot
     def metric():
-        df_filtered = df[df["account"] == input.account()]
+        df_value = df()
+        df_filtered = df_value[df_value["account"] == input.account()]
         if input.metric() == "ROC Curve":
             return plot_auc_curve(df_filtered, "is_electronics", "training_score")
         else:
