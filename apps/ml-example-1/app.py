@@ -32,7 +32,7 @@ app_ui = ui.page_sidebar(
                 ),
             ),
         ),
-        title="Options",
+        title="",
     ),
 )
 

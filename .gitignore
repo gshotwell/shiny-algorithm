@@ -167,19 +167,10 @@ ecommerce.csv
 data-prep.*
 *.Rproj
 
+_reactive-calc_files
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-.Rproj.user
+*.html
