@@ -8,9 +8,15 @@ from plots import (
     plot_api_response,
 )
 
+file_path = Path(__file__).parent / "simulated-data.csv"
 
-df = pd.read_csv(Path(__file__).parent / "simulated-data.csv")
-df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+@reactive.file_reader(file_path, interval_secs=0.2)
+def df():
+    out = pd.read_csv(file_path)
+    out["date"] = pd.to_datetime(out["date"], errors="coerce")
+    return out
+
 
 training_tab = ui.nav(
     "Training Dashboard",
@@ -83,7 +89,12 @@ app_ui = ui.page_sidebar(
         ui.input_select(
             "account",
             "Account",
-            choices=df["account"].unique().tolist(),
+            choices=[
+                "Berge & Berge",
+                "Fritsch & Fritsch",
+                "Hintz & Hintz",
+                "Mosciski and Sons" "Wolff Ltd",
+            ],
         ),
         ui.panel_conditional(
             "input.tabs !== 'Training Dashboard'",
@@ -111,12 +122,14 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.plot
     def score_dist():
-        df_filtered = df[df["account"] == input.account()]
+        df_value = df()
+        df_filtered = df_value[df_value["account"] == input.account()]
         return plot_score_distribution(df_filtered)
 
     @render.plot
     def metric():
-        df_filtered = df[df["account"] == input.account()]
+        df_value = df()
+        df_filtered = df_value[df_value["account"] == input.account()]
         if input.metric() == "ROC Curve":
             return plot_auc_curve(df_filtered, "is_electronics", "training_score")
         else:
@@ -131,16 +144,17 @@ def server(input: Inputs, output: Outputs, session: Session):
         start_date, end_date = input.dates()
         start_date = pd.to_datetime(start_date)
         end_date = pd.to_datetime(end_date)
-        out = df[(df["date"] > start_date) & (df["date"] <= end_date)].sample(
-            n=input.sample(), replace=True
-        )
+        df_value = df()
+        out = df_value[
+            (df_value["date"] > start_date) & (df_value["date"] <= end_date)
+        ].sample(n=input.sample(), replace=True)
         return out
 
     @reactive.Calc()
     def filtered_data():
         sample_df = sampled_data()
         sample_df = sample_df.loc[sample_df["account"] == input.account()]
-        return sample_df
+        return sample_df.reset_index(drop=True)
 
     @render.plot
     def api_response():
@@ -161,15 +175,28 @@ def server(input: Inputs, output: Outputs, session: Session):
             filters=True,
         )
 
+    @reactive.Calc
+    def selected_row():
+        rows = list(req(input.results_selected_rows()))
+        return filtered_data().loc[rows[0]]
+
     @render.text
     def to_review():
-        selected_row = list(req(input.results_selected_rows()))
-        print(selected_row)
-        print(filtered_data()["text"][selected_row[0]])
-        if selected_row:
-            return filtered_data()["text"].iloc[selected_row[0]]
-        else:
-            return ""
+        return selected_row()["text"]
+
+    @reactive.Effect
+    @reactive.event(input.is_electronics)
+    def _():
+        update_annotation(df(), id=selected_row()["id"], annotation="electronics")
+
+    @reactive.Effect
+    @reactive.event(input.not_electronics)
+    def _():
+        update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
+
+    def update_annotation(current_df, id: str, annotation: str):
+        current_df.loc[current_df["id"] == id, "annotation"] = annotation
+        current_df.to_csv(Path(__file__).parent / "simulated-data.csv", index=False)
 
 
 app = App(app_ui, server)
