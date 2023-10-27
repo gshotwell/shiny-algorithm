@@ -2,10 +2,10 @@
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D>Dates] --> Sa{{Sample}}
-  S>Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   Sa --> F{{Filtered}}
-  A>Account] --> F
+  A[Account] --> F
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -18,9 +18,9 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
-  Sa --> F[Filtered]
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  Sa --> F{{Filtered}}
   A[Account] --> F
   F --> P2((Model\nScores)):::changed
   F --> P1((API\nResponse))
@@ -34,9 +34,9 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
-  Sa --> F[Filtered]:::changed
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
+  Sa --> F{{Filtered}}:::changed
   A[Account] --> F
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
@@ -49,10 +49,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]:::changed --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -64,10 +64,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]:::changed 
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}:::changed 
+  S[Sample Size] --> Sa
   A[Account] --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -79,10 +79,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates]:::changed  --> Sa[Sample]
-  S[Sample\nSize]:::changed  --> Sa
+  D[Dates]:::changed  --> Sa{{Sample}}
+  S[Sample Size]:::changed  --> Sa
   A[Account] --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -95,10 +95,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account] --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse)):::changed 
   
@@ -111,10 +111,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account] --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -125,10 +125,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]:::changed  --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -139,10 +139,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]  --> F
-  Sa --> F[Filtered]:::changed
+  Sa --> F{{Filtered}}:::changed
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -154,10 +154,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]  --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores)):::changed
   F --> P1((API\nResponse)):::changed
   
@@ -169,10 +169,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]  --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores)):::changed
   F --> P1((API\nResponse))
   
@@ -184,10 +184,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]  --> F
-  Sa --> F[Filtered]:::changed
+  Sa --> F{{Filtered}}:::changed
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
@@ -200,7 +200,7 @@ flowchart TD
 %%| fig-width: 4
 flowchart TD
   D[Dates] --> Sa{{Sample}}:::changed
-  S[Sample\nSize] --> Sa
+  S[Sample Size] --> Sa
   A[Account]:::changed  --> F
   Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
@@ -214,10 +214,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]:::changed  --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse)):::changed
   
@@ -229,10 +229,10 @@ flowchart TD
 ```{mermaid}
 %%| fig-width: 4
 flowchart TD
-  D[Dates] --> Sa[Sample]
-  S[Sample\nSize] --> Sa
+  D[Dates] --> Sa{{Sample}}
+  S[Sample Size] --> Sa
   A[Account]  --> F
-  Sa --> F[Filtered]
+  Sa --> F{{Filtered}}
   F --> P2((Model\nScores))
   F --> P1((API\nResponse))
   
