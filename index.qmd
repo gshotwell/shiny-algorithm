@@ -27,9 +27,6 @@ def include_qmd(path):
     - Takes forever!
     - Often incorrect!
 - Why can't we do it ourselves?
-- Tension between speed an quality
-    - Must be quick to develop
-    - Must be able to grow
 
 ## Example: Feature API
 - Managed feature store metadata
@@ -38,16 +35,16 @@ def include_qmd(path):
 - Needed a front-end
 
 ## What was missing?
-- We needed a framework which accomodate simple and complex apps
-    - Streamlit's execution model looked fragile
-    - Dash's stateless callbacks seemed awkward
+- We needed a framework which could grow
+    - Streamlit's looked fragile
+    - Dash seemed awkward
     - We didn't have any JavaScript developers
 
 ## What is Shiny?
-- Framework for building fast extensible applications
+- Framework for building fast, extensible applications
 - Pure python implementation released last year
-- Easy enough to use for rapid prototyping
-- Solid enough to use for long term apps
+- Easy enough rapid prototyping
+- Everthing you need to build a product
 
 ## How did Shiny do that?
 
@@ -94,25 +91,46 @@ include_shiny_folder(
 - Easy to get wrong
 - Hard to tell when you've gotten it wrong
 
+
+##
+![](imgs/slack-activity.png)
+
 ## What's a better way?
 
 ![Generic DAG](imgs/generic-dag.png)
-
-
 
 ## Shiny's Strategy
 
 - Infer the relationships between components 
 - Build a computation graph
-- Use graph to perfectly reexecute your application
+- Use graph to minimally reexecute your application
+
+## Sounds fishy
+![](imgs/larry-suspicion.gif)
 
 ## Does that really work?
 
-- You're not wrong to find this suspicious
 - For this to work, the inference has to be 100% reliable
-- For this to be helpful you have to understand and trust that it's reliable
+- You need to understand and trust this algorithm
 
 ## How would you do this?
+
+```{.python}
+    @render.plot
+    def score_dist():
+        df_filtered = df[df["account"] == input.account()]
+        return dist_plot(df_filtered)
+
+    @render.plot
+    def metric():
+        df_filtered = df[df["account"] == input.account()]
+        if input.metric() == "ROC Curve":
+            return plot_auc_curve(df_filtered, "is_electronics", "training_score")
+        else:
+            return plot_precision_recall_curve(
+                df_filtered, "is_electronics", "training_score"
+            )
+```
 
 ## Static code analysis
 
@@ -209,22 +227,11 @@ def server(input: Inputs, output: Outputs, session: Session):
 app = App(app_ui, server)
 ```
 
-
 ## Reactive graph
-
 ```{mermaid}
 %%| fig-width: 2
 flowchart TD
-  S[Slider] --> R{Render}
-  R --> Sc((Text))
-```
-
-## Reactive graph
-
-```{mermaid}
-%%| fig-width: 2
-flowchart TD
-  S[Slider] --> Sc((Text))
+  S[Input] --> Sc((Output))
 ```
 
 ## Drawing our application graph
@@ -284,18 +291,16 @@ include_qmd("_flip-flop-app.qmd")
 include_shiny_folder("apps/ml-example-2", components="viewer")
 ```
 
-## What do we want?
+## What do I want?
 1) Query the database for a sample between those dates
-2) Filter the result of that query by account id
+2) Filter the result of that query by account id in memory
 3) Use _those_ results to power the two graphs
 4) Cache the results of 1 and 2
-5) Perfectly invalidate the cache when upstream inputs change
+5) Perfectly invalidate the cache only when upstream inputs change
 6) Do no thinking or work
 
 ## Reactive calculations
 - Defined with the `@reactive.Calc` decorator
-- Called like other inputs
-- Can read inputs, reactive values, or other reactive calculations
 - Caches its value, so it's cheap to call repeatedly
 - Adds a node to the reactive graph
   - Discards cached value when upstream nodes invalidate
@@ -309,7 +314,7 @@ include_shiny_folder("apps/ml-example-2", components="viewer")
         start_date, end_date = input.dates()
         start_date = pd.to_datetime(start_date)
         end_date = pd.to_datetime(end_date)
-        return query_db(start_date, end_date, sample_size)
+        return query_db(start_date, end_date, input.sample_size())
 
     @reactive.Calc()
     def filtered_data():
@@ -325,7 +330,7 @@ include_shiny_folder("apps/ml-example-2", components="viewer")
         start_date, end_date = input.dates()
         start_date = pd.to_datetime(start_date)
         end_date = pd.to_datetime(end_date)
-        return query_db(start_date, end_date, sample_size)
+        return query_db(start_date, end_date, input.sample_size())
 
     @reactive.Calc()
     def filtered_data():
@@ -420,7 +425,7 @@ def _():
 ## Things to note
 
 - `@reactive.event` can be paired with rendering functions and `reactive.Calc`
-- Adds event-driven chocolate chips into the broader reactive cookie
+- Adds event-driven chocolate chips into the reactive cookie
 - If you find yourself using it everywhere there's likely a bigger problem
 
 ## Side effects vs values
