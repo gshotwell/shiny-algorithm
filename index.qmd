@@ -293,7 +293,7 @@ include_shiny_folder("apps/ml-example-2", components="viewer")
 ## What do I want?
 1) Query the database for a sample between those dates
 2) Filter the result of that query by account id in memory
-3) Send that data to the graphs
+3) Send that data to the plotting functions
 4) Cache the results of 1 and 2
 5) Invalidate the cache only when upstream inputs change
 6) Do no thinking or work
@@ -456,7 +456,7 @@ def _():
 - Include time with `reactive.invalidate_later`
 - Store things in variables with `reactive.Value`
 
-## Online workshop
+## Thank you!
 
 
 ```{python}
@@ -465,12 +465,14 @@ import qrcode
 qr = qrcode.QRCode(
     version=3, box_size=20, border=10, error_correction=qrcode.constants.ERROR_CORRECT_H
 )
-data = "https://posit-dev.github.io/shiny-python-workshop-2023/"
+data = "https://gshotwell.github.io/shiny-algorithm/#/title-slide"
 qr.add_data(data)
 qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 img.save("qr_code.png")
 ```
 
-### [https://posit-dev.github.io/shiny-python-workshop-2023/](https://posit-dev.github.io/shiny-python-workshop-2023/)
+### [https://gshotwell.github.io/shiny-algorithm/](https://posit-dev.github.io/shiny-python-workshop-2023/)
 ![](qr_code.png)
+
+[Shiny for Python](https://shiny.posit.co/py/)
