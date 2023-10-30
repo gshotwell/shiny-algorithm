@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gshotwell.github.io/shiny-algorithm/about.html</loc>
-    <lastmod>2023-10-30T13:57:11.885Z</lastmod>
+    <loc>https://github.com/gshotwell/shiny-algorithm/index.html</loc>
+    <lastmod>2023-10-30T22:05:34.908Z</lastmod>
   </url>
   <url>
-    <loc>https://gshotwell.github.io/shiny-algorithm/index.html</loc>
-    <lastmod>2023-10-30T13:57:11.899Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gshotwell.github.io/shiny-algorithm/data-prep.html</loc>
-    <lastmod>2023-10-26T12:56:01.471Z</lastmod>
+    <loc>https://github.com/gshotwell/shiny-algorithm/about.html</loc>
+    <lastmod>2023-10-30T22:05:09.464Z</lastmod>
   </url>
 </urlset>
