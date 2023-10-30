@@ -2,10 +2,10 @@
 title: "How does Shiny work?"
 format: 
   revealjs:
-    incremental: true   
+    incremental: true
 filters: 
     - shinylive
-execute:
+editor:
   render-on-save: true
 ---
 ```{python}
@@ -278,10 +278,9 @@ include_qmd("_flip-flop-app.qmd")
 ## Saving and reusing calculated values
 
 - So far we've been working with shallow reactive graphs
-- Each input is passed to a rendering function which produces an output
-- Input -> Recipe -> Output can produce repetitive, inefficient applications
-- `@reactive.Calc` creates calculations whose results can be used by one _or more_ outputs
-- This adds intermediate nodes to the reactive graph
+- Inputs are directly consumed by rendering functions
+- `@reactive.Calc` creates calculations whose results are used by other functions
+- This adds depth to the reactive graph
 
 ## Reactive Calc example
 
@@ -294,10 +293,21 @@ include_shiny_folder("apps/ml-example-2", components="viewer")
 ## What do I want?
 1) Query the database for a sample between those dates
 2) Filter the result of that query by account id in memory
-3) Use _those_ results to power the two graphs
+3) Send that data to the graphs
 4) Cache the results of 1 and 2
-5) Perfectly invalidate the cache only when upstream inputs change
+5) Invalidate the cache only when upstream inputs change
 6) Do no thinking or work
+
+## What do I want?
+
+::: nonincremental
+1) Query the database for a sample between those dates
+2) Filter the result of that query by account id in memory
+3) Send that data to the graphs
+4) **Cache the results of 1 and 2**
+5) **Invalidate the cache only when upstream inputs change**
+6) **Do no thinking or work**
+:::
 
 ## Reactive calculations
 - Defined with the `@reactive.Calc` decorator
