@@ -43,8 +43,8 @@ def include_qmd(path):
 ## What is Shiny?
 - Framework for building fast, extensible applications
 - Pure python implementation released last year
-- Easy enough rapid prototyping
-- Everthing you need to build a product
+- Easy enough for rapid prototyping
+- Everything you need to build a product
 
 ## Example: Model training dashboard
 
@@ -433,7 +433,7 @@ def _():
 ## Summary
 
 - Shiny is performant and extensible
-- It's algorithm is elegant, but not magic
+- Shiny's algorithm is elegant, but not magic
 - App behaviour should be driven by users, not your framework
 - Pick a framework which can solve tomorrow's problems
 
