@@ -67,7 +67,6 @@ def plot_precision_recall_curve(df: DataFrame, true_col: str, pred_col: str):
 
 def plot_api_response(df):
     account = df["account"].unique()
-    print(account)
 
     data = np.random.lognormal(0, 1 / len(account), 10000)
     df = pd.DataFrame({"Value": data})

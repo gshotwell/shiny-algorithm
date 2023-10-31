@@ -46,17 +46,9 @@ def include_qmd(path):
 - Easy enough rapid prototyping
 - Everthing you need to build a product
 
-## How did Shiny do that?
+## Example: Model training dashboard
 
-```{python}
-# | echo: false
-# | output: asis
-include_shiny_folder(
-    "apps/ml-example-1",
-    components="viewer",
-    viewer_height=500,
-)
-```
+
 
 ## How did Shiny do that?
 
@@ -235,15 +227,6 @@ flowchart TD
 ```
 
 ## Drawing our application graph
-```{python}
-# | echo: false
-# | output: asis
-include_shiny_folder(
-    "apps/ml-example-1",
-    components="viewer",
-    viewer_height=500,
-)
-```
 
 ```{python}
 # | output: "asis"
@@ -282,13 +265,8 @@ include_qmd("_flip-flop-app.qmd")
 - `@reactive.Calc` creates calculations whose results are used by other functions
 - This adds depth to the reactive graph
 
-## Reactive Calc example
+## Example: Model monitoring
 
-```{python}
-# | echo: false
-# | output: asis
-include_shiny_folder("apps/ml-example-2", components="viewer")
-```
 
 ## What do I want?
 1) Query the database for a sample between those dates
@@ -365,12 +343,7 @@ include_qmd("_reactive-calc.qmd")
     - You want to trigger a side effect
 - Event-driven programming ain't all bad
 
-## Example
-```{python}
-# | echo: false
-# | output: asis
-include_shiny_folder("apps/ml-example-3", components="viewer")
-```
+## Example: data annotation
 
 ## What do we want
 - Annotation shouldn't react automatically
@@ -456,8 +429,15 @@ def _():
 - Include time with `reactive.invalidate_later`
 - Store things in variables with `reactive.Value`
 
-## Thank you!
 
+## Summary
+
+- Shiny is performant and extensible
+- It's algorithm is elegant, but not magic
+- App behaviour should be driven by users, not your framework
+- Pick a framework which can solve tomorrow's problems
+
+## Thank you!
 
 ```{python}
 import qrcode

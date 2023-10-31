@@ -85,6 +85,7 @@ app_ui = ui.page_navbar(
         width="300px",
     ),
     id="tabs",
+    title="Monitoring",
 )
 
 
