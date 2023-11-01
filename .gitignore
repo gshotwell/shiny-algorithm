@@ -178,3 +178,5 @@ _reactive-calc_files
 qr_code.png
 
 apps/ml-example-1/rsconnect-python/
+
+site_libs/
