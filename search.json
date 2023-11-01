@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
     "objectID": "index.html#searching-for-a-framework",
     "href": "index.html#searching-for-a-framework",
     "title": "How does Shiny work?",
@@ -25,7 +18,7 @@
     "href": "index.html#what-was-missing",
     "title": "How does Shiny work?",
     "section": "What was missing?",
-    "text": "What was missing?\n\nWe needed a framework which could grow\n\nStreamlit’s looked fragile\nDash seemed awkward\nWe didn’t have any JavaScript developers"
+    "text": "What was missing?\n\nWe needed a framework which could grow\n\nStreamlit looked fragile\nDash seemed awkward\nWe didn’t have any JavaScript developers"
   },
   {
     "objectID": "index.html#what-is-shiny",
@@ -33,13 +26,6 @@
     "title": "How does Shiny work?",
     "section": "What is Shiny?",
     "text": "What is Shiny?\n\nFramework for building fast, extensible applications\nPure python implementation released last year\nEasy enough for rapid prototyping\nEverything you need to build a product"
-  },
-  {
-    "objectID": "index.html#example-model-training-dashboard",
-    "href": "index.html#example-model-training-dashboard",
-    "title": "How does Shiny work?",
-    "section": "Example: Model training dashboard",
-    "text": "Example: Model training dashboard"
   },
   {
     "objectID": "index.html#how-did-shiny-do-that",
@@ -53,14 +39,14 @@
     "href": "index.html#how-do-other-frameworks-work",
     "title": "How does Shiny work?",
     "section": "How do other frameworks work?",
-    "text": "How do other frameworks work?\n\nStreamlit: re-render everything everywhere all the time\nDash/Panel/Gradio: Define callback functions"
+    "text": "How do other frameworks work?\n\nStreamlit: re-render everything everywhere all the time\nDash/Gradio/Solara: Event-handling"
   },
   {
     "objectID": "index.html#event-driven-programming",
     "href": "index.html#event-driven-programming",
     "title": "How does Shiny work?",
     "section": "Event driven programming",
-    "text": "Event driven programming\n\nYou have to do it\nEasy to get wrong\nHard to tell when you’ve gotten it wrong"
+    "text": "Event driven programming\n\nManually define which behaviour triggers callback function\nYou have to do it\nEasy to get wrong\nHard to tell when you’ve gotten it wrong"
   },
   {
     "objectID": "index.html#whats-a-better-way",
@@ -77,18 +63,11 @@
     "text": "Shiny’s Strategy\n\nInfer the relationships between components\nBuild a computation graph\nUse graph to minimally reexecute your application"
   },
   {
-    "objectID": "index.html#sounds-fishy",
-    "href": "index.html#sounds-fishy",
-    "title": "How does Shiny work?",
-    "section": "Sounds fishy",
-    "text": "Sounds fishy"
-  },
-  {
     "objectID": "index.html#does-that-really-work",
     "href": "index.html#does-that-really-work",
     "title": "How does Shiny work?",
     "section": "Does that really work?",
-    "text": "Does that really work?\n\nFor this to work, the inference has to be 100% reliable\nYou need to understand and trust this algorithm"
+    "text": "Does that really work?\n\nFor this to work, the inference has to be 100% reliable\nOnly useful if you understand and trust the inference"
   },
   {
     "objectID": "index.html#how-would-you-do-this",
@@ -112,32 +91,32 @@
     "text": "Runtime tracing\n\nWatch what components ask for\nKeep track of those relationships\nUse relationships to trigger rendering"
   },
   {
-    "objectID": "index.html#outputs-and-recipes",
-    "href": "index.html#outputs-and-recipes",
+    "objectID": "index.html#user-asks-for-output",
+    "href": "index.html#user-asks-for-output",
     "title": "How does Shiny work?",
-    "section": "Outputs and recipes",
-    "text": "Outputs and recipes\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
+    "section": "User asks for output",
+    "text": "User asks for output\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
-    "objectID": "index.html#outputs-and-recipes-1",
-    "href": "index.html#outputs-and-recipes-1",
+    "objectID": "index.html#rendering-function-is-triggered",
+    "href": "index.html#rendering-function-is-triggered",
     "title": "How does Shiny work?",
-    "section": "Outputs and recipes",
-    "text": "Outputs and recipes\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
+    "section": "Rendering function is triggered",
+    "text": "Rendering function is triggered\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
-    "objectID": "index.html#outputs-and-recipes-2",
-    "href": "index.html#outputs-and-recipes-2",
+    "objectID": "index.html#renderer-needs-input",
+    "href": "index.html#renderer-needs-input",
     "title": "How does Shiny work?",
-    "section": "Outputs and recipes",
-    "text": "Outputs and recipes\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
+    "section": "Renderer needs input",
+    "text": "Renderer needs input\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
-    "objectID": "index.html#recipes-and-inputs",
-    "href": "index.html#recipes-and-inputs",
+    "objectID": "index.html#input-retrieved-from-ui",
+    "href": "index.html#input-retrieved-from-ui",
     "title": "How does Shiny work?",
-    "section": "Recipes and inputs",
-    "text": "Recipes and inputs\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
+    "section": "Input retrieved from UI",
+    "text": "Input retrieved from UI\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#reactive-graph",
@@ -452,28 +431,21 @@
     "href": "index.html#saving-and-reusing-calculated-values",
     "title": "How does Shiny work?",
     "section": "Saving and reusing calculated values",
-    "text": "Saving and reusing calculated values\n\nSo far we’ve been working with shallow reactive graphs\nInputs are directly consumed by rendering functions\n@reactive.Calc creates calculations whose results are used by other functions\nThis adds depth to the reactive graph"
-  },
-  {
-    "objectID": "index.html#example-model-monitoring",
-    "href": "index.html#example-model-monitoring",
-    "title": "How does Shiny work?",
-    "section": "Example: Model monitoring",
-    "text": "Example: Model monitoring"
+    "text": "Saving and reusing calculated values\n\nSo far we’ve been working with shallow reactive graphs\n\nInputs are directly consumed by rendering functions\nLimited\nNot that efficient\n\n@reactive.Calc creates calculations whose results are used by other functions\nThis adds depth to the reactive graph"
   },
   {
     "objectID": "index.html#what-do-i-want",
     "href": "index.html#what-do-i-want",
     "title": "How does Shiny work?",
     "section": "What do I want?",
-    "text": "What do I want?\n\nQuery the database for a sample between those dates\nFilter the result of that query by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
+    "text": "What do I want?\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#what-do-i-want-1",
     "href": "index.html#what-do-i-want-1",
     "title": "How does Shiny work?",
     "section": "What do I want?",
-    "text": "What do I want?\n\n\nQuery the database for a sample between those dates\nFilter the result of that query by account id in memory\nSend that data to the graphs\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
+    "text": "What do I want?\n\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#reactive-calculations-1",
@@ -487,14 +459,14 @@
     "href": "index.html#reactive-calculation-to-the-rescue",
     "title": "How does Shiny work?",
     "section": "Reactive Calculation to the rescue",
-    "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered"
+    "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered\n\n    @render.plot():\n    def scores():\n        return plot_scores(filtered_data())"
   },
   {
     "objectID": "index.html#reactive-calculation-to-the-rescue-1",
     "href": "index.html#reactive-calculation-to-the-rescue-1",
     "title": "How does Shiny work?",
     "section": "Reactive Calculation to the rescue",
-    "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered"
+    "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered\n\n    @render.plot():\n    def scores():\n        return plot_scores(filtered_data())"
   },
   {
     "objectID": "index.html#initial-state-2",
@@ -700,13 +672,6 @@
     "text": "Events and Effects\n\nReactivity is a great default\nNot everything fits this pattern\n\nYou want to specify when something happens\nYou want to batch inputs\nYou want to trigger a side effect\n\nEvent-driven programming ain’t all bad"
   },
   {
-    "objectID": "index.html#example-data-annotation",
-    "href": "index.html#example-data-annotation",
-    "title": "How does Shiny work?",
-    "section": "Example: data annotation",
-    "text": "Example: data annotation"
-  },
-  {
     "objectID": "index.html#what-do-we-want",
     "href": "index.html#what-do-we-want",
     "title": "How does Shiny work?",
@@ -718,35 +683,35 @@
     "href": "index.html#reactive-effects",
     "title": "How does Shiny work?",
     "section": "Reactive effects",
-    "text": "Reactive effects\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
+    "text": "Reactive effects\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#reactive-effect",
     "href": "index.html#reactive-effect",
     "title": "How does Shiny work?",
     "section": "Reactive effect",
-    "text": "Reactive effect\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
+    "text": "Reactive effect\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#reactive-event",
     "href": "index.html#reactive-event",
     "title": "How does Shiny work?",
     "section": "Reactive event",
-    "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
+    "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\"),"
   },
   {
     "objectID": "index.html#reactive-event-1",
     "href": "index.html#reactive-event-1",
     "title": "How does Shiny work?",
     "section": "Reactive event",
-    "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef _():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
+    "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#things-to-note",
     "href": "index.html#things-to-note",
     "title": "How does Shiny work?",
     "section": "Things to note",
-    "text": "Things to note\n\n@reactive.event can be paired with rendering functions and reactive.Calc\nAdds event-driven chocolate chips into the reactive cookie\nIf you find yourself using it everywhere there’s likely a bigger problem"
+    "text": "Things to note\n\n@reactive.event can be paired with rendering functions and reactive.Calc\nAdds event-driven chocolate chips into the reactive cookie\nUsing reactive.event everywhere is a code smell"
   },
   {
     "objectID": "index.html#side-effects-vs-values",
@@ -767,7 +732,7 @@
     "href": "index.html#summary",
     "title": "How does Shiny work?",
     "section": "Summary",
-    "text": "Summary\n\nShiny is performant and extensible\nShiny’s algorithm is elegant, but not magic\nApp behaviour should be driven by users, not your framework\nPick a framework which can solve tomorrow’s problems"
+    "text": "Summary\n\nShiny is performant and extensible\nShiny’s algorithm is elegant, but not magic\nUsers, not frameworks, should dermine app behaviour\nChoose a framework that can grow with your application"
   },
   {
     "objectID": "index.html#thank-you",
@@ -775,5 +740,12 @@
     "title": "How does Shiny work?",
     "section": "Thank you!",
     "text": "Thank you!\nhttps://gshotwell.github.io/shiny-algorithm/\n\nShiny for Python"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
   }
 ]

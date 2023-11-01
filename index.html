@@ -9,9 +9,9 @@
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.2.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.2.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.2.1/shinylive/shinylive.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/shinylive.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
@@ -430,7 +430,7 @@
 <ul>
 <li class="fragment">We needed a framework which could grow
 <ul>
-<li class="fragment">Streamlit’s looked fragile</li>
+<li class="fragment">Streamlit looked fragile</li>
 <li class="fragment">Dash seemed awkward</li>
 <li class="fragment">We didn’t have any JavaScript developers</li>
 </ul></li>
@@ -445,8 +445,8 @@
 <li class="fragment">Everything you need to build a product</li>
 </ul>
 </section>
-<section id="example-model-training-dashboard" class="slide level2">
-<h2>Example: Model training dashboard</h2>
+<section id="section" class="slide level2" data-background-iframe="https://gordonposit.shinyapps.io/ml-example-11/" data-background-interactive="true">
+<h2></h2>
 </section>
 <section id="how-did-shiny-do-that" class="slide level2">
 <h2>How did Shiny do that?</h2>
@@ -473,18 +473,19 @@
 <h2>How do other frameworks work?</h2>
 <ul>
 <li class="fragment">Streamlit: re-render everything everywhere all the time</li>
-<li class="fragment">Dash/Panel/Gradio: Define callback functions</li>
+<li class="fragment">Dash/Gradio/Solara: Event-handling</li>
 </ul>
 </section>
 <section id="event-driven-programming" class="slide level2">
 <h2>Event driven programming</h2>
 <ul>
+<li class="fragment">Manually define which behaviour triggers callback function</li>
 <li class="fragment">You have to do it</li>
 <li class="fragment">Easy to get wrong</li>
 <li class="fragment">Hard to tell when you’ve gotten it wrong</li>
 </ul>
 </section>
-<section id="section" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 
 <img data-src="imgs/slack-activity.png" class="r-stretch"></section>
@@ -500,15 +501,14 @@
 <li class="fragment">Use graph to minimally reexecute your application</li>
 </ul>
 </section>
-<section id="sounds-fishy" class="slide level2">
-<h2>Sounds fishy</h2>
-
-<img data-src="imgs/larry-suspicion.gif" class="r-stretch"></section>
+<section id="section-2" class="slide level2" data-background-image="imgs/larry-suspicion.gif">
+<h2></h2>
+</section>
 <section id="does-that-really-work" class="slide level2">
 <h2>Does that really work?</h2>
 <ul>
 <li class="fragment">For this to work, the inference has to be 100% reliable</li>
-<li class="fragment">You need to understand and trust this algorithm</li>
+<li class="fragment">Only useful if you understand and trust the inference</li>
 </ul>
 </section>
 <section id="how-would-you-do-this" class="slide level2">
@@ -659,8 +659,8 @@
 <li class="fragment">Use relationships to trigger rendering</li>
 </ul>
 </section>
-<section id="outputs-and-recipes" class="slide level2">
-<h2>Outputs and recipes</h2>
+<section id="user-asks-for-output" class="slide level2">
+<h2>User asks for output</h2>
 <div class="sourceCode" id="cb4" data-code-line-numbers="5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
@@ -676,8 +676,8 @@
 <span id="cb4-13"><a href="#cb4-13"></a></span>
 <span id="cb4-14"><a href="#cb4-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="outputs-and-recipes-1" class="slide level2">
-<h2>Outputs and recipes</h2>
+<section id="rendering-function-is-triggered" class="slide level2">
+<h2>Rendering function is triggered</h2>
 <div class="sourceCode" id="cb5" data-code-line-numbers="10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
@@ -693,8 +693,8 @@
 <span id="cb5-13"><a href="#cb5-13"></a></span>
 <span id="cb5-14"><a href="#cb5-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="outputs-and-recipes-2" class="slide level2">
-<h2>Outputs and recipes</h2>
+<section id="renderer-needs-input" class="slide level2">
+<h2>Renderer needs input</h2>
 <div class="sourceCode" id="cb6" data-code-line-numbers="11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
 <span id="cb6-2"><a href="#cb6-2"></a></span>
 <span id="cb6-3"><a href="#cb6-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
@@ -710,8 +710,8 @@
 <span id="cb6-13"><a href="#cb6-13"></a></span>
 <span id="cb6-14"><a href="#cb6-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="recipes-and-inputs" class="slide level2">
-<h2>Recipes and inputs</h2>
+<section id="input-retrieved-from-ui" class="slide level2">
+<h2>Input retrieved from UI</h2>
 <div class="sourceCode" id="cb7" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
@@ -1569,20 +1569,24 @@
 <section id="saving-and-reusing-calculated-values" class="slide level2">
 <h2>Saving and reusing calculated values</h2>
 <ul>
-<li class="fragment">So far we’ve been working with shallow reactive graphs</li>
+<li class="fragment">So far we’ve been working with shallow reactive graphs
+<ul>
 <li class="fragment">Inputs are directly consumed by rendering functions</li>
+<li class="fragment">Limited</li>
+<li class="fragment">Not that efficient</li>
+</ul></li>
 <li class="fragment"><code>@reactive.Calc</code> creates calculations whose results are used by other functions</li>
 <li class="fragment">This adds depth to the reactive graph</li>
 </ul>
 </section>
-<section id="example-model-monitoring" class="slide level2">
-<h2>Example: Model monitoring</h2>
+<section id="section-3" class="slide level2" data-background-iframe="https://gordonposit.shinyapps.io/ml-example-2/" data-background-interactive="true">
+<h2></h2>
 </section>
 <section id="what-do-i-want" class="slide level2">
 <h2>What do I want?</h2>
 <ol type="1">
-<li class="fragment">Query the database for a sample between those dates</li>
-<li class="fragment">Filter the result of that query by account id in memory</li>
+<li class="fragment">Query the database for a sample between dates</li>
+<li class="fragment">Filter sample by account id in memory</li>
 <li class="fragment">Send that data to the plotting functions</li>
 <li class="fragment">Cache the results of 1 and 2</li>
 <li class="fragment">Invalidate the cache only when upstream inputs change</li>
@@ -1593,9 +1597,9 @@
 <h2>What do I want?</h2>
 <div>
 <ol type="1">
-<li>Query the database for a sample between those dates</li>
-<li>Filter the result of that query by account id in memory</li>
-<li>Send that data to the graphs</li>
+<li>Query the database for a sample between dates</li>
+<li>Filter sample by account id in memory</li>
+<li>Send that data to the plotting functions</li>
 <li><strong>Cache the results of 1 and 2</strong></li>
 <li><strong>Invalidate the cache only when upstream inputs change</strong></li>
 <li><strong>Do no thinking or work</strong></li>
@@ -1627,11 +1631,15 @@
 <span id="cb10-9"><a href="#cb10-9"></a>    <span class="kw">def</span> filtered_data():</span>
 <span id="cb10-10"><a href="#cb10-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
 <span id="cb10-11"><a href="#cb10-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb10-12"><a href="#cb10-12"></a>        <span class="cf">return</span> filtered</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="cf">return</span> filtered</span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a>    <span class="at">@render.plot</span>():</span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="kw">def</span> scores():</span>
+<span id="cb10-16"><a href="#cb10-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-calculation-to-the-rescue-1" class="slide level2">
 <h2>Reactive Calculation to the rescue</h2>
-<div class="sourceCode" id="cb11" data-code-line-numbers="2,10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>   <span class="at">@reactive.Calc</span></span>
+<div class="sourceCode" id="cb11" data-code-line-numbers="2,9,10,16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>   <span class="at">@reactive.Calc</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>    <span class="kw">def</span> sampled_data():</span>
 <span id="cb11-3"><a href="#cb11-3"></a>        start_date, end_date <span class="op">=</span> <span class="bu">input</span>.dates()</span>
 <span id="cb11-4"><a href="#cb11-4"></a>        start_date <span class="op">=</span> pd.to_datetime(start_date)</span>
@@ -1642,7 +1650,11 @@
 <span id="cb11-9"><a href="#cb11-9"></a>    <span class="kw">def</span> filtered_data():</span>
 <span id="cb11-10"><a href="#cb11-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
 <span id="cb11-11"><a href="#cb11-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb11-12"><a href="#cb11-12"></a>        <span class="cf">return</span> filtered</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-12"><a href="#cb11-12"></a>        <span class="cf">return</span> filtered</span>
+<span id="cb11-13"><a href="#cb11-13"></a></span>
+<span id="cb11-14"><a href="#cb11-14"></a>    <span class="at">@render.plot</span>():</span>
+<span id="cb11-15"><a href="#cb11-15"></a>    <span class="kw">def</span> scores():</span>
+<span id="cb11-16"><a href="#cb11-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="initial-state-2" class="slide level2">
 <h2>Initial state</h2>
@@ -2269,8 +2281,8 @@
 <li class="fragment">Event-driven programming ain’t all bad</li>
 </ul>
 </section>
-<section id="example-data-annotation" class="slide level2">
-<h2>Example: data annotation</h2>
+<section id="section-4" class="slide level2" data-background-iframe="https://gordonposit.shinyapps.io/ml-example-3/" data-background-interactive="true">
+<h2></h2>
 </section>
 <section id="what-do-we-want" class="slide level2">
 <h2>What do we want</h2>
@@ -2283,48 +2295,48 @@
 <h2>Reactive effects</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">def</span> _():</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">def</span> mark_yes():</span>
 <span id="cb12-4"><a href="#cb12-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
 <span id="cb12-5"><a href="#cb12-5"></a></span>
 <span id="cb12-6"><a href="#cb12-6"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb12-7"><a href="#cb12-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">def</span> _():</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">def</span> mark_no():</span>
 <span id="cb12-9"><a href="#cb12-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-effect" class="slide level2">
 <h2>Reactive effect</h2>
 <div class="sourceCode" id="cb13" data-code-line-numbers="1,3,6,8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">def</span> _():</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">def</span> mark_yes():</span>
 <span id="cb13-4"><a href="#cb13-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
 <span id="cb13-5"><a href="#cb13-5"></a></span>
 <span id="cb13-6"><a href="#cb13-6"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb13-7"><a href="#cb13-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">def</span> _():</span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">def</span> mark_no():</span>
 <span id="cb13-9"><a href="#cb13-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-event" class="slide level2">
 <h2>Reactive event</h2>
 <div class="sourceCode" id="cb14" data-code-line-numbers="2,7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">def</span> _():</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">def</span> mark_yes():</span>
 <span id="cb14-4"><a href="#cb14-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
 <span id="cb14-5"><a href="#cb14-5"></a></span>
 <span id="cb14-6"><a href="#cb14-6"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb14-7"><a href="#cb14-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="kw">def</span> _():</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="kw">def</span> mark_no():</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-event-1" class="slide level2">
 <h2>Reactive event</h2>
 <div class="sourceCode" id="cb15" data-code-line-numbers="4,9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">def</span> _():</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">def</span> mark_yes():</span>
 <span id="cb15-4"><a href="#cb15-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
 <span id="cb15-5"><a href="#cb15-5"></a></span>
 <span id="cb15-6"><a href="#cb15-6"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb15-7"><a href="#cb15-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="kw">def</span> _():</span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="kw">def</span> mark_no():</span>
 <span id="cb15-9"><a href="#cb15-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="things-to-note" class="slide level2">
@@ -2332,7 +2344,7 @@
 <ul>
 <li class="fragment"><code>@reactive.event</code> can be paired with rendering functions and <code>reactive.Calc</code></li>
 <li class="fragment">Adds event-driven chocolate chips into the reactive cookie</li>
-<li class="fragment">If you find yourself using it everywhere there’s likely a bigger problem</li>
+<li class="fragment">Using reactive.event everywhere is a code smell</li>
 </ul>
 </section>
 <section id="side-effects-vs-values" class="slide level2">
@@ -2366,8 +2378,8 @@
 <ul>
 <li class="fragment">Shiny is performant and extensible</li>
 <li class="fragment">Shiny’s algorithm is elegant, but not magic</li>
-<li class="fragment">App behaviour should be driven by users, not your framework</li>
-<li class="fragment">Pick a framework which can solve tomorrow’s problems</li>
+<li class="fragment">Users, not frameworks, should dermine app behaviour</li>
+<li class="fragment">Choose a framework that can grow with your application</li>
 </ul>
 </section>
 <section id="thank-you" class="slide level2">
