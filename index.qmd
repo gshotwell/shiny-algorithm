@@ -36,7 +36,7 @@ def include_qmd(path):
 
 ## What was missing?
 - We needed a framework which could grow
-    - Streamlit's looked fragile
+    - Streamlit looked fragile
     - Dash seemed awkward
     - We didn't have any JavaScript developers
 
@@ -46,8 +46,7 @@ def include_qmd(path):
 - Easy enough for rapid prototyping
 - Everything you need to build a product
 
-## Example: Model training dashboard
-
+## {background-iframe="https://gordonposit.shinyapps.io/ml-example-11/" background-interactive=true}
 
 
 ## How did Shiny do that?
@@ -75,10 +74,11 @@ def include_qmd(path):
 ## How do other frameworks work?
 
 - Streamlit: re-render everything everywhere all the time
-- Dash/Panel/Gradio: Define callback functions
+- Dash/Gradio/Solara: Event-handling
 
 ## Event driven programming
 
+- Manually define which behaviour triggers callback function
 - You have to do it
 - Easy to get wrong
 - Hard to tell when you've gotten it wrong
@@ -97,13 +97,12 @@ def include_qmd(path):
 - Build a computation graph
 - Use graph to minimally reexecute your application
 
-## Sounds fishy
-![](imgs/larry-suspicion.gif)
+## {background-image="imgs/larry-suspicion.gif"}
 
 ## Does that really work?
 
 - For this to work, the inference has to be 100% reliable
-- You need to understand and trust this algorithm
+- Only useful if you understand and trust the inference
 
 ## How would you do this?
 
@@ -142,7 +141,7 @@ include_shiny_folder(
 - Use relationships to trigger rendering 
 
 
-## Outputs and recipes
+## User asks for output
 
 ```{.python code-line-numbers="5"}
 from shiny import Inputs, Outputs, Session, App, render, ui
@@ -161,7 +160,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 app = App(app_ui, server)
 ```
 
-## Outputs and recipes
+## Rendering function is triggered
 
 ```{.python code-line-numbers="10"}
 from shiny import Inputs, Outputs, Session, App, render, ui
@@ -180,7 +179,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 app = App(app_ui, server)
 ```
 
-## Outputs and recipes
+## Renderer needs input
 
 ```{.python code-line-numbers="11"}
 from shiny import Inputs, Outputs, Session, App, render, ui
@@ -199,7 +198,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 app = App(app_ui, server)
 ```
 
-## Recipes and inputs
+## Input retrieved from UI
 
 ```{.python code-line-numbers="4"}
 from shiny import Inputs, Outputs, Session, App, render, ui
@@ -261,16 +260,17 @@ include_qmd("_flip-flop-app.qmd")
 ## Saving and reusing calculated values
 
 - So far we've been working with shallow reactive graphs
-- Inputs are directly consumed by rendering functions
+    - Inputs are directly consumed by rendering functions
+    - Limited
+    - Not that efficient
 - `@reactive.Calc` creates calculations whose results are used by other functions
 - This adds depth to the reactive graph
 
-## Example: Model monitoring
-
+## {background-iframe="https://gordonposit.shinyapps.io/ml-example-2/" background-interactive=true}
 
 ## What do I want?
-1) Query the database for a sample between those dates
-2) Filter the result of that query by account id in memory
+1) Query the database for a sample between dates
+2) Filter sample by account id in memory
 3) Send that data to the plotting functions
 4) Cache the results of 1 and 2
 5) Invalidate the cache only when upstream inputs change
@@ -279,9 +279,9 @@ include_qmd("_flip-flop-app.qmd")
 ## What do I want?
 
 ::: nonincremental
-1) Query the database for a sample between those dates
-2) Filter the result of that query by account id in memory
-3) Send that data to the graphs
+1) Query the database for a sample between dates
+2) Filter sample by account id in memory
+3) Send that data to the plotting functions
 4) **Cache the results of 1 and 2**
 5) **Invalidate the cache only when upstream inputs change**
 6) **Do no thinking or work**
@@ -309,10 +309,14 @@ include_qmd("_flip-flop-app.qmd")
         filtered = sampled_data()
         filtered = filtered.loc[filtered["account"] == input.account()]
         return filtered
+
+    @render.plot():
+    def scores():
+        return plot_scores(filtered_data())
 ```
 
 ## Reactive Calculation to the rescue
-```{.python code-line-numbers="2,10"}
+```{.python code-line-numbers="2,9,10,16"}
    @reactive.Calc
     def sampled_data():
         start_date, end_date = input.dates()
@@ -325,6 +329,10 @@ include_qmd("_flip-flop-app.qmd")
         filtered = sampled_data()
         filtered = filtered.loc[filtered["account"] == input.account()]
         return filtered
+
+    @render.plot():
+    def scores():
+        return plot_scores(filtered_data())
 ```
 
 ```{python}
@@ -343,7 +351,7 @@ include_qmd("_reactive-calc.qmd")
     - You want to trigger a side effect
 - Event-driven programming ain't all bad
 
-## Example: data annotation
+## {background-iframe="https://gordonposit.shinyapps.io/ml-example-3/" background-interactive=true}
 
 ## What do we want
 - Annotation shouldn't react automatically
@@ -353,12 +361,12 @@ include_qmd("_reactive-calc.qmd")
 ```{.python}
 @reactive.Effect
 @reactive.event(input.is_electronics)
-def _():
+def mark_yes():
     update_annotation(df(), id=selected_row()["id"], annotation="electronics")
 
 @reactive.Effect
 @reactive.event(input.not_electronics)
-def _():
+def mark_no():
     update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
 ```
 
@@ -367,12 +375,12 @@ def _():
 ```{.python code-line-numbers="1,3,6,8"}
 @reactive.Effect
 @reactive.event(input.is_electronics)
-def _():
+def mark_yes():
     update_annotation(df(), id=selected_row()["id"], annotation="electronics")
 
 @reactive.Effect
 @reactive.event(input.not_electronics)
-def _():
+def mark_no():
     update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
 ```
 
@@ -381,13 +389,13 @@ def _():
 ```{.python code-line-numbers="2,7"}
 @reactive.Effect
 @reactive.event(input.is_electronics)
-def _():
+def mark_yes():
     update_annotation(df(), id=selected_row()["id"], annotation="electronics")
 
 @reactive.Effect
 @reactive.event(input.not_electronics)
-def _():
-    update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
+def mark_no():
+    update_annotation(df(), id=selected_row()["id"], annotation="not_electronics"),
 ```
 
 ## Reactive event
@@ -395,12 +403,12 @@ def _():
 ```{.python code-line-numbers="4,9"}
 @reactive.Effect
 @reactive.event(input.is_electronics)
-def _():
+def mark_yes():
     update_annotation(df(), id=selected_row()["id"], annotation="electronics")
 
 @reactive.Effect
 @reactive.event(input.not_electronics)
-def _():
+def mark_no():
     update_annotation(df(), id=selected_row()["id"], annotation="not_electronics")
 ```
 
@@ -409,7 +417,7 @@ def _():
 
 - `@reactive.event` can be paired with rendering functions and `reactive.Calc`
 - Adds event-driven chocolate chips into the reactive cookie
-- If you find yourself using it everywhere there's likely a bigger problem
+- Using reactive.event everywhere is a code smell
 
 ## Side effects vs values
 
@@ -434,8 +442,8 @@ def _():
 
 - Shiny is performant and extensible
 - Shiny's algorithm is elegant, but not magic
-- App behaviour should be driven by users, not your framework
-- Pick a framework which can solve tomorrow's problems
+- Users, not frameworks, should dermine app behaviour
+- Choose a framework that can grow with your application
 
 ## Thank you!
 
