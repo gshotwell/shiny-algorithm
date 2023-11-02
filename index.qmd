@@ -440,9 +440,9 @@ def mark_no():
 
 ## Summary
 
-- Shiny is performant and extensible
+- Shiny creates performant apps with almost no work
 - Shiny's algorithm is elegant, but not magic
-- Users, not frameworks, should dermine app behaviour
+- Your framework should be able to handle what your users want
 - Choose a framework that can grow with your application
 
 ## Thank you!
