@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
     "objectID": "index.html#searching-for-a-framework",
     "href": "index.html#searching-for-a-framework",
     "title": "How does Shiny work?",
@@ -26,6 +33,13 @@
     "title": "How does Shiny work?",
     "section": "What is Shiny?",
     "text": "What is Shiny?\n\nFramework for building fast, extensible applications\nPure python implementation released last year\nEasy enough for rapid prototyping\nEverything you need to build a product"
+  },
+  {
+    "objectID": "index.html#example-model-training",
+    "href": "index.html#example-model-training",
+    "title": "How does Shiny work?",
+    "section": "Example: Model training",
+    "text": "Example: Model training"
   },
   {
     "objectID": "index.html#how-did-shiny-do-that",
@@ -434,6 +448,13 @@
     "text": "Saving and reusing calculated values\n\nSo far we’ve been working with shallow reactive graphs\n\nInputs are directly consumed by rendering functions\nLimited\nNot that efficient\n\n@reactive.Calc creates calculations whose results are used by other functions\nThis adds depth to the reactive graph"
   },
   {
+    "objectID": "index.html#example-model-monitoring",
+    "href": "index.html#example-model-monitoring",
+    "title": "How does Shiny work?",
+    "section": "Example: Model Monitoring",
+    "text": "Example: Model Monitoring"
+  },
+  {
     "objectID": "index.html#what-do-i-want",
     "href": "index.html#what-do-i-want",
     "title": "How does Shiny work?",
@@ -672,6 +693,13 @@
     "text": "Events and Effects\n\nReactivity is a great default\nNot everything fits this pattern\n\nYou want to specify when something happens\nYou want to batch inputs\nYou want to trigger a side effect\n\nEvent-driven programming ain’t all bad"
   },
   {
+    "objectID": "index.html#example-data-annotation",
+    "href": "index.html#example-data-annotation",
+    "title": "How does Shiny work?",
+    "section": "Example: Data annotation",
+    "text": "Example: Data annotation"
+  },
+  {
     "objectID": "index.html#what-do-we-want",
     "href": "index.html#what-do-we-want",
     "title": "How does Shiny work?",
@@ -732,7 +760,7 @@
     "href": "index.html#summary",
     "title": "How does Shiny work?",
     "section": "Summary",
-    "text": "Summary\n\nShiny is performant and extensible\nShiny’s algorithm is elegant, but not magic\nUsers, not frameworks, should dermine app behaviour\nChoose a framework that can grow with your application"
+    "text": "Summary\n\nShiny creates performant apps with almost no work\nShiny’s algorithm is elegant, but not magic\nYour framework should be able to handle what your users want\nChoose a framework that can grow with your application"
   },
   {
     "objectID": "index.html#thank-you",
@@ -740,12 +768,5 @@
     "title": "How does Shiny work?",
     "section": "Thank you!",
     "text": "Thank you!\nhttps://gshotwell.github.io/shiny-algorithm/\n\nShiny for Python"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
   }
 ]
