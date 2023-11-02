@@ -46,7 +46,7 @@ def include_qmd(path):
 - Easy enough for rapid prototyping
 - Everything you need to build a product
 
-## {background-iframe="https://gordonposit.shinyapps.io/ml-example-11/" background-interactive=true}
+## Example: Model training
 
 
 ## How did Shiny do that?
@@ -266,7 +266,7 @@ include_qmd("_flip-flop-app.qmd")
 - `@reactive.Calc` creates calculations whose results are used by other functions
 - This adds depth to the reactive graph
 
-## {background-iframe="https://gordonposit.shinyapps.io/ml-example-2/" background-interactive=true}
+## Example: Model Monitoring
 
 ## What do I want?
 1) Query the database for a sample between dates
@@ -351,7 +351,7 @@ include_qmd("_reactive-calc.qmd")
     - You want to trigger a side effect
 - Event-driven programming ain't all bad
 
-## {background-iframe="https://gordonposit.shinyapps.io/ml-example-3/" background-interactive=true}
+## Example: Data annotation
 
 ## What do we want
 - Annotation shouldn't react automatically
