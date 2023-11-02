@@ -441,7 +441,7 @@
 <h2>What is Shiny?</h2>
 <ul>
 <li class="fragment">Framework for building fast, extensible applications</li>
-<li class="fragment">Pure python implementation released last year</li>
+<li class="fragment">Pure Python implementation released last year</li>
 <li class="fragment">Easy enough for rapid prototyping</li>
 <li class="fragment">Everything you need to build a product</li>
 </ul>
@@ -499,7 +499,7 @@
 <ul>
 <li class="fragment">Infer the relationships between components</li>
 <li class="fragment">Build a computation graph</li>
-<li class="fragment">Use graph to minimally reexecute your application</li>
+<li class="fragment">Use graph to minimally re-execute your application</li>
 </ul>
 </section>
 <section id="section-1" class="slide level2" data-background-image="imgs/larry-suspicion.gif">
@@ -785,8 +785,8 @@
 </div>
 </div>
 </section>
-<section id="calculate-scatter-plot-1" class="slide level2">
-<h2>Calculate scatter plot</h2>
+<section id="calculate-metric-plot" class="slide level2">
+<h2>Calculate metric plot</h2>
 <div class="cell" data-reveal="true" data-fig-width="6">
 <div class="cell-output-display">
 <div>
@@ -1587,10 +1587,10 @@
 <h2>What do I want?</h2>
 <ol type="1">
 <li class="fragment">Query the database for a sample between dates</li>
-<li class="fragment">Filter sample by account id in memory</li>
+<li class="fragment">Filter sample by account name in memory</li>
 <li class="fragment">Send that data to the plotting functions</li>
 <li class="fragment">Cache the results of 1 and 2</li>
-<li class="fragment">Invalidate the cache only when upstream inputs change</li>
+<li class="fragment">Invalidate a cache only when upstream inputs change</li>
 <li class="fragment">Do no thinking or work</li>
 </ol>
 </section>
@@ -1602,7 +1602,7 @@
 <li>Filter sample by account id in memory</li>
 <li>Send that data to the plotting functions</li>
 <li><strong>Cache the results of 1 and 2</strong></li>
-<li><strong>Invalidate the cache only when upstream inputs change</strong></li>
+<li><strong>Invalidate a cache only when upstream inputs change</strong></li>
 <li><strong>Do no thinking or work</strong></li>
 </ol>
 </div>
@@ -1950,7 +1950,7 @@
 <pre class="mermaid mermaid-js">flowchart TD
   D[Dates] --&gt; Sa{{Sample}}
   S[Sample Size] --&gt; Sa
-  A[Account]  --&gt; F
+  A[Account]:::changed  --&gt; F
   Sa --&gt; F{{Filtered}}
   F --&gt; P2((Model\nScores))
   F --&gt; P1((API\nResponse))
@@ -2377,15 +2377,15 @@
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
-<li class="fragment">Shiny creates performant apps with almost no work</li>
-<li class="fragment">Shiny’s algorithm is elegant, but not magic</li>
+<li class="fragment">Shiny creates performant apps with very little work</li>
+<li class="fragment">Its algorithm is elegant, but not magic</li>
 <li class="fragment">Your framework should be able to handle what your users want</li>
 <li class="fragment">Choose a framework that can grow with your application</li>
 </ul>
 </section>
 <section id="thank-you" class="slide level2">
 <h2>Thank you!</h2>
-<h3 id="httpsgshotwell.github.ioshiny-algorithm"><a href="https://posit-dev.github.io/shiny-python-workshop-2023/">https://gshotwell.github.io/shiny-algorithm/</a></h3>
+<h3 id="httpsgithub.comgshotwellshiny-algorithm"><a href="https://github.com/gshotwell/shiny-algorithm">https://github.com/gshotwell/shiny-algorithm</a></h3>
 
 <img data-src="qr_code.png" class="r-stretch"><p><a href="https://shiny.posit.co/py/">Shiny for Python</a></p>
 

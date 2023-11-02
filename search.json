@@ -32,7 +32,7 @@
     "href": "index.html#what-is-shiny",
     "title": "How does Shiny work?",
     "section": "What is Shiny?",
-    "text": "What is Shiny?\n\nFramework for building fast, extensible applications\nPure python implementation released last year\nEasy enough for rapid prototyping\nEverything you need to build a product"
+    "text": "What is Shiny?\n\nFramework for building fast, extensible applications\nPure Python implementation released last year\nEasy enough for rapid prototyping\nEverything you need to build a product"
   },
   {
     "objectID": "index.html#example-model-training",
@@ -74,7 +74,7 @@
     "href": "index.html#shinys-strategy",
     "title": "How does Shiny work?",
     "section": "Shiny’s Strategy",
-    "text": "Shiny’s Strategy\n\nInfer the relationships between components\nBuild a computation graph\nUse graph to minimally reexecute your application"
+    "text": "Shiny’s Strategy\n\nInfer the relationships between components\nBuild a computation graph\nUse graph to minimally re-execute your application"
   },
   {
     "objectID": "index.html#does-that-really-work",
@@ -161,11 +161,11 @@
     "text": "Calculate scatter plot\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
   },
   {
-    "objectID": "index.html#calculate-scatter-plot-1",
-    "href": "index.html#calculate-scatter-plot-1",
+    "objectID": "index.html#calculate-metric-plot",
+    "href": "index.html#calculate-metric-plot",
     "title": "How does Shiny work?",
-    "section": "Calculate scatter plot",
-    "text": "Calculate scatter plot\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
+    "section": "Calculate metric plot",
+    "text": "Calculate metric plot\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-distribution",
@@ -459,14 +459,14 @@
     "href": "index.html#what-do-i-want",
     "title": "How does Shiny work?",
     "section": "What do I want?",
-    "text": "What do I want?\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
+    "text": "What do I want?\n\nQuery the database for a sample between dates\nFilter sample by account name in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate a cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#what-do-i-want-1",
     "href": "index.html#what-do-i-want-1",
     "title": "How does Shiny work?",
     "section": "What do I want?",
-    "text": "What do I want?\n\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate the cache only when upstream inputs change\nDo no thinking or work"
+    "text": "What do I want?\n\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate a cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#reactive-calculations-1",
@@ -585,7 +585,7 @@
     "href": "index.html#get-account-and-sample",
     "title": "How does Shiny work?",
     "section": "Get Account and Sample",
-    "text": "Get Account and Sample\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
+    "text": "Get Account and Sample\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]:::changed  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#calculate-api-response",
@@ -760,13 +760,13 @@
     "href": "index.html#summary",
     "title": "How does Shiny work?",
     "section": "Summary",
-    "text": "Summary\n\nShiny creates performant apps with almost no work\nShiny’s algorithm is elegant, but not magic\nYour framework should be able to handle what your users want\nChoose a framework that can grow with your application"
+    "text": "Summary\n\nShiny creates performant apps with very little work\nIts algorithm is elegant, but not magic\nYour framework should be able to handle what your users want\nChoose a framework that can grow with your application"
   },
   {
     "objectID": "index.html#thank-you",
     "href": "index.html#thank-you",
     "title": "How does Shiny work?",
     "section": "Thank you!",
-    "text": "Thank you!\nhttps://gshotwell.github.io/shiny-algorithm/\n\nShiny for Python"
+    "text": "Thank you!\nhttps://github.com/gshotwell/shiny-algorithm\n\nShiny for Python"
   }
 ]
