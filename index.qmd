@@ -42,7 +42,7 @@ def include_qmd(path):
 
 ## What is Shiny?
 - Framework for building fast, extensible applications
-- Pure python implementation released last year
+- Pure Python implementation released last year
 - Easy enough for rapid prototyping
 - Everything you need to build a product
 
@@ -95,7 +95,7 @@ def include_qmd(path):
 
 - Infer the relationships between components 
 - Build a computation graph
-- Use graph to minimally reexecute your application
+- Use graph to minimally re-execute your application
 
 ## {background-image="imgs/larry-suspicion.gif"}
 
@@ -270,10 +270,10 @@ include_qmd("_flip-flop-app.qmd")
 
 ## What do I want?
 1) Query the database for a sample between dates
-2) Filter sample by account id in memory
+2) Filter sample by account name in memory
 3) Send that data to the plotting functions
 4) Cache the results of 1 and 2
-5) Invalidate the cache only when upstream inputs change
+5) Invalidate a cache only when upstream inputs change
 6) Do no thinking or work
 
 ## What do I want?
@@ -283,7 +283,7 @@ include_qmd("_flip-flop-app.qmd")
 2) Filter sample by account id in memory
 3) Send that data to the plotting functions
 4) **Cache the results of 1 and 2**
-5) **Invalidate the cache only when upstream inputs change**
+5) **Invalidate a cache only when upstream inputs change**
 6) **Do no thinking or work**
 :::
 
@@ -440,8 +440,8 @@ def mark_no():
 
 ## Summary
 
-- Shiny creates performant apps with almost no work
-- Shiny's algorithm is elegant, but not magic
+- Shiny creates performant apps with very little work
+- Its algorithm is elegant, but not magic
 - Your framework should be able to handle what your users want
 - Choose a framework that can grow with your application
 
@@ -453,14 +453,14 @@ import qrcode
 qr = qrcode.QRCode(
     version=3, box_size=20, border=10, error_correction=qrcode.constants.ERROR_CORRECT_H
 )
-data = "https://gshotwell.github.io/shiny-algorithm/#/title-slide"
+data = "https://github.com/gshotwell/shiny-algorithm"
 qr.add_data(data)
 qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 img.save("qr_code.png")
 ```
 
-### [https://gshotwell.github.io/shiny-algorithm/](https://posit-dev.github.io/shiny-python-workshop-2023/)
+### [https://github.com/gshotwell/shiny-algorithm](https://github.com/gshotwell/shiny-algorithm)
 ![](qr_code.png)
 
 [Shiny for Python](https://shiny.posit.co/py/)

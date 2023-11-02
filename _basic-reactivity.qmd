@@ -27,7 +27,7 @@ flowchart TD
   classDef changed fill:#f96
 ```
 
-## Calculate scatter plot
+## Calculate metric plot
 
 ```{mermaid}
 %%| fig-width: 6
