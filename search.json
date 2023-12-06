@@ -9,770 +9,770 @@
   {
     "objectID": "index.html#you-need-a-framework-with-range",
     "href": "index.html#you-need-a-framework-with-range",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "You need a framework with range",
     "text": "You need a framework with range\n\nData projects start simple but end complicated\nLimited frameworks lead to painful refactoring\nDoes your framework solve tomorrow’s problems?"
   },
   {
     "objectID": "index.html#what-is-shiny",
     "href": "index.html#what-is-shiny",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "What is Shiny?",
     "text": "What is Shiny?\n\nFramework for building fast, extensible applications\nPure Python implementation released last year\nEasy enough for rapid prototyping\nEverything you need to build a product"
   },
   {
     "objectID": "index.html#example-model-training",
     "href": "index.html#example-model-training",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Example: Model training",
     "text": "Example: Model training"
   },
   {
     "objectID": "index.html#gradio-implementation",
     "href": "index.html#gradio-implementation",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Gradio implementation",
     "text": "Gradio implementation\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if metric == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
   },
   {
     "objectID": "index.html#manual-state-management",
     "href": "index.html#manual-state-management",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Manual state management",
     "text": "Manual state management\nwith gr.Blocks#| () as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:rn plot_precision_recall_curve(    data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
   },
   {
     "objectID": "index.html#manual-callback-management",
     "href": "index.html#manual-callback-management",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Manual callback management",
     "text": "Manual callback management\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_metrics, [sampled_data, log_scale], [tip_plot])"
   },
   {
     "objectID": "index.html#how-did-shiny-do-that",
     "href": "index.html#how-did-shiny-do-that",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "How did Shiny do that?",
     "text": "How did Shiny do that?\n    @render.plot\n    def score_dist():\n        df_filtered = df[df[\"account\"] == input.account()]\n        return dist_plot(df_filtered)\n\n    @render.plot\n    def metric():\n        df_filtered = df[df[\"account\"] == input.account()]\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(df_filtered, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                df_filtered, \"is_electronics\", \"training_score\"\n            )\n\nWe told Shiny what to do\nWe didn’t tell Shiny when to do it"
   },
   {
     "objectID": "index.html#how-do-other-frameworks-work",
     "href": "index.html#how-do-other-frameworks-work",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "How do other frameworks work?",
     "text": "How do other frameworks work?\n\nStreamlit: re-render everything everywhere all the time\nDash/Gradio/Solara: Event-handling"
   },
   {
     "objectID": "index.html#event-driven-programming",
     "href": "index.html#event-driven-programming",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Event driven programming",
     "text": "Event driven programming\n\nManually define which behaviour triggers callback function\nYou have to do it\nEasy to get wrong\nHard to tell when you’ve gotten it wrong"
   },
   {
     "objectID": "index.html#whats-a-better-way",
     "href": "index.html#whats-a-better-way",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "What’s a better way?",
     "text": "What’s a better way?\n\nGeneric DAG"
   },
   {
     "objectID": "index.html#shinys-strategy",
     "href": "index.html#shinys-strategy",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Shiny’s Strategy",
     "text": "Shiny’s Strategy\n\nInfer the relationships between components\nBuild a computation graph\nUse graph to minimally re-execute your application"
   },
   {
     "objectID": "index.html#does-that-really-work",
     "href": "index.html#does-that-really-work",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Does that really work?",
     "text": "Does that really work?\n\nFor this to work, the inference has to be 100% reliable\nOnly useful if you understand and trust the inference"
   },
   {
     "objectID": "index.html#how-would-you-do-this",
     "href": "index.html#how-would-you-do-this",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "How would you do this?",
     "text": "How would you do this?\n    @render.plot\n    def score_dist():\n        df_filtered = df[df[\"account\"] == input.account()]\n        return dist_plot(df_filtered)\n\n    @render.plot\n    def metric():\n        df_filtered = df[df[\"account\"] == input.account()]\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(df_filtered, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                df_filtered, \"is_electronics\", \"training_score\"\n            )"
   },
   {
     "objectID": "index.html#static-code-analysis",
     "href": "index.html#static-code-analysis",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Static code analysis",
     "text": "Static code analysis\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\nimport shinyswatch\nfrom htmltools import css\n\nfrom shiny import App, module, reactive, render, ui\n\napp_ui = ui.page_fixed(\n    {\"class\": \"my-5\"},\n    shinyswatch.theme.minty(),\n    ui.panel_title(\"Shiny TodoMVC\"),\n    ui.layout_sidebar(\n        ui.panel_sidebar(\n            ui.input_text(\"todo_input_text\", \"\", placeholder=\"Todo text\"),\n            ui.input_action_button(\"add\", \"Add to-do\"),\n        ),\n        ui.panel_main(\n            ui.output_text(\"cleared_tasks\"),\n            ui.div(id=\"tasks\", style=\"margin-top: 0.5em\"),\n        ),\n    ),\n)\n\n\ndef server(input, output, session):\n    finished_tasks = reactive.Value(0)\n    task_counter = reactive.Value(0)\n\n    @output\n    @render.text\n    def cleared_tasks():\n        return f\"Finished tasks: {finished_tasks()}\"\n\n    @reactive.Effect\n    @reactive.event(input.add)\n    def add():\n        counter = task_counter.get() + 1\n        task_counter.set(counter)\n        id = \"task_\" + str(counter)\n        ui.insert_ui(\n            selector=\"#tasks\",\n            where=\"beforeEnd\",\n            ui=task_ui(id),\n        )\n\n        finish = task_server(id, text=input.todo_input_text())\n\n        # Defining a nested reactive effect like this might feel a bit funny but it's the\n        # correct pattern in this case. We are reacting to the `finish`\n        # event within the `add` closure, so nesting the reactive effects\n        # means that we don't have to worry about conflicting with\n        # finish events from other task elements.\n        @reactive.Effect\n        @reactive.event(finish)\n        def iterate_counter():\n            finished_tasks.set(finished_tasks.get() + 1)\n\n        ui.update_text(\"todo_input_text\", value=\"\")\n\n\n# Modules to define the rows\n\n\n@module.ui\ndef task_ui():\n    return ui.output_ui(\"button_row\")\n\n\n@module.server\ndef task_server(input, output, session, text):\n    finished = reactive.Value(False)\n\n    @output\n    @render.ui\n    def button_row():\n        button = None\n        if finished():\n            button = ui.input_action_button(\"clear\", \"Clear\", class_=\"btn-warning\")\n        else:\n            button = ui.input_action_button(\"finish\", \"Finish\", class_=\"btn-default\")\n\n        return ui.row(\n            ui.column(4, button),\n            ui.column(8, text),\n            class_=\"mt-3 p-3 border align-items-center\",\n            style=css(text_decoration=\"line-through\" if finished() else None),\n        )\n\n    @reactive.Effect\n    @reactive.event(input.finish)\n    def finish_task():\n        finished.set(True)\n\n    @reactive.Effect\n    @reactive.event(input.clear)\n    def clear_task():\n        ui.remove_ui(selector=f\"div#{session.ns('button_row')}\")\n\n        # Since remove_ui only removes the HTML the reactive effects will be held\n        # in memory unless they're explicitly destroyed. This isn't a big\n        # deal because they're very small, but it's good to clean them up.\n        finish_task.destroy()\n        clear_task.destroy()\n\n    # Returning the input.finish button to the parent scope allows us\n    # to react to it in the parent context to keep track of the number of\n    # completed tasks.\n    #\n    # This is a good pattern because it makes the module more general.\n    # The same module can be used by different applications which may\n    # do different things when the task is completed.\n    return input.finish\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshinyswatch"
   },
   {
     "objectID": "index.html#runtime-tracing",
     "href": "index.html#runtime-tracing",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Runtime tracing",
     "text": "Runtime tracing\n\nWatch what components ask for\nKeep track of those relationships\nUse relationships to trigger rendering"
   },
   {
     "objectID": "index.html#user-asks-for-output",
     "href": "index.html#user-asks-for-output",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "User asks for output",
     "text": "User asks for output\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#rendering-function-is-triggered",
     "href": "index.html#rendering-function-is-triggered",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Rendering function is triggered",
     "text": "Rendering function is triggered\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#renderer-needs-input",
     "href": "index.html#renderer-needs-input",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Renderer needs input",
     "text": "Renderer needs input\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#input-retrieved-from-ui",
     "href": "index.html#input-retrieved-from-ui",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Input retrieved from UI",
     "text": "Input retrieved from UI\nfrom shiny import Inputs, Outputs, Session, App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 20),\n    ui.output_text_verbatim(\"txt\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        return f\"n*2 is {input.n() * 2}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#reactive-graph",
     "href": "index.html#reactive-graph",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive graph",
     "text": "Reactive graph\n\n\n\n\nflowchart TD\n  S[Input] --&gt; Sc((Output))"
   },
   {
     "objectID": "index.html#drawing-our-application-graph",
     "href": "index.html#drawing-our-application-graph",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Drawing our application graph",
     "text": "Drawing our application graph"
   },
   {
     "objectID": "index.html#initial-state",
     "href": "index.html#initial-state",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Initial state",
     "text": "Initial state\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none"
   },
   {
     "objectID": "index.html#calculate-scatter-plot",
     "href": "index.html#calculate-scatter-plot",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate scatter plot",
     "text": "Calculate scatter plot\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-metric-plot",
     "href": "index.html#calculate-metric-plot",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate metric plot",
     "text": "Calculate metric plot\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-distribution",
     "href": "index.html#calculate-distribution",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate distribution",
     "text": "Calculate distribution\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot)):::changed\n  linkStyle 2 display:none\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-distribution-1",
     "href": "index.html#calculate-distribution-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate distribution",
     "text": "Calculate distribution\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot)):::changed\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#reactive-graph-1",
     "href": "index.html#reactive-graph-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive graph",
     "text": "Reactive graph\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n    Sl[Account\\nSelector]  --&gt; Sc \n  Sl --&gt; M((Dist Plot))"
   },
   {
     "objectID": "index.html#account-changes",
     "href": "index.html#account-changes",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Account changes",
     "text": "Account changes\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector]:::changed --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidated",
     "href": "index.html#invalidated",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidated",
     "text": "Invalidated\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector]:::changed --&gt; Sc \n  Sl --&gt; M((Dist Plot)):::changed\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#forget-dependencies",
     "href": "index.html#forget-dependencies",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Forget dependencies",
     "text": "Forget dependencies\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none"
   },
   {
     "objectID": "index.html#recalculate",
     "href": "index.html#recalculate",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none"
   },
   {
     "objectID": "index.html#recalculate-1",
     "href": "index.html#recalculate-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96\n  linkStyle 2 display:none"
   },
   {
     "objectID": "index.html#recalculate-2",
     "href": "index.html#recalculate-2",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot)):::changed\n  \n  classDef changed fill:#f96\n  linkStyle 2 display:none"
   },
   {
     "objectID": "index.html#recalculate-3",
     "href": "index.html#recalculate-3",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot)):::changed\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#updated",
     "href": "index.html#updated",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Updated",
     "text": "Updated\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#metric-changes",
     "href": "index.html#metric-changes",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Metric changes",
     "text": "Metric changes\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector]:::changed --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidated-1",
     "href": "index.html#invalidated-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidated",
     "text": "Invalidated\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector]:::changed --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#forget-dependencies-1",
     "href": "index.html#forget-dependencies-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Forget dependencies",
     "text": "Forget dependencies\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96\n  linkStyle 0 display:none\n  linkStyle 1 display:none"
   },
   {
     "objectID": "index.html#recalculate-4",
     "href": "index.html#recalculate-4",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96\n  linkStyle 0 display:none\n  linkStyle 1 display:none"
   },
   {
     "objectID": "index.html#recalculate-5",
     "href": "index.html#recalculate-5",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Recalculate",
     "text": "Recalculate\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot)):::changed\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#updated-1",
     "href": "index.html#updated-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Updated",
     "text": "Updated\n\n\n\n\nflowchart TD\n  C[Metric\\nSelector] --&gt; Sc((Metric\\nPlot))\n  Sl[Account\\nSelector] --&gt; Sc \n  Sl --&gt; M((Dist Plot))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#graphs-can-change",
     "href": "index.html#graphs-can-change",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Graphs can change",
     "text": "Graphs can change\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\nfrom shiny import Inputs, Outputs, Session, App, reactive, render, req, ui\nimport random\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_radio_buttons(\n            \"choice\", \"Which slider?\", choices=[\"Slider 1\", \"Slider 2\"]\n        ),\n        ui.input_slider(\"slider_1\", \"Slider 1\", 0, 100, 15),\n        ui.input_slider(\"slider_2\", \"Slider 2\", 0, 100, 45),\n    ),\n    ui.card({\"style\": \"font-size: larger\"}, ui.output_text(\"txt\")),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.text\n    def txt():\n        random_number = random.randint(0, 100)\n        if input.choice() == \"Slider 1\":\n            return f\"Slider 1 is {input.slider_1()}, a random number is {random_number}\"\n        else:\n            return f\"Slider 2 is {input.slider_2()}, a random number is {random_number}\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "index.html#different-graphs",
     "href": "index.html#different-graphs",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Different graphs",
     "text": "Different graphs\n@render.text\ndef txt():\n    random_number = random.randint(0, 100)\n    if input.choice() == \"Slider 1\":\n        return (\n            f\"Slider 1 is {input.slider_1()}, \"\n            f\"a random number is {random_number}\"\n        )\n    else: \n        return (\n            f\"Slider 2 is {input.slider_2()}, \"\n            f\"a random number is {random_number}\"\n        )"
   },
   {
     "objectID": "index.html#initial-state-1",
     "href": "index.html#initial-state-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Initial state",
     "text": "Initial state\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-text",
     "href": "index.html#calculate-text",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate Text",
     "text": "Calculate Text\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-button-value",
     "href": "index.html#fetch-button-value",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch button value",
     "text": "Fetch button value\n\n\n\n\nflowchart TD\n  C[Buttons]:::changed --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-slider-1",
     "href": "index.html#fetch-slider-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch Slider 1",
     "text": "Fetch Slider 1\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1]:::changed --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#complete",
     "href": "index.html#complete",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Complete",
     "text": "Complete\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#slider-2-changes",
     "href": "index.html#slider-2-changes",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Slider 2 changes",
     "text": "Slider 2 changes\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2]:::changed --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#nothing-happens",
     "href": "index.html#nothing-happens",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Nothing happens",
     "text": "Nothing happens\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#slider-1-changes",
     "href": "index.html#slider-1-changes",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Slider 1 changes",
     "text": "Slider 1 changes\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1]:::changed --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidate",
     "href": "index.html#invalidate",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate",
     "text": "Invalidate\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1]:::changed --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n\n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-text-1",
     "href": "index.html#calculate-text-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate Text",
     "text": "Calculate Text\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-button-value-1",
     "href": "index.html#fetch-button-value-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch button value",
     "text": "Fetch button value\n\n\n\n\nflowchart TD\n  C[Buttons]:::changed --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-slider-1-1",
     "href": "index.html#fetch-slider-1-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch Slider 1",
     "text": "Fetch Slider 1\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1]:::changed --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#complete-1",
     "href": "index.html#complete-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Complete",
     "text": "Complete\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#buttons-change",
     "href": "index.html#buttons-change",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Buttons change",
     "text": "Buttons change\n\n\n\n\nflowchart TD\n  C[Buttons]:::changed --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidate-1",
     "href": "index.html#invalidate-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate",
     "text": "Invalidate\n\n\n\n\nflowchart TD\n  C[Buttons]:::changed --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#calculate-text-2",
     "href": "index.html#calculate-text-2",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate Text",
     "text": "Calculate Text\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 0 display:none\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-button-value-2",
     "href": "index.html#fetch-button-value-2",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch button value",
     "text": "Fetch button value\n\n\n\n\nflowchart TD\n  C[Buttons]:::changed --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 1 display:none\n  linkStyle 2 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#fetch-slider-2",
     "href": "index.html#fetch-slider-2",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Fetch Slider 2!",
     "text": "Fetch Slider 2!\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output)):::changed\n  S1[Slider 1] --&gt; T \n  S2[Slider 2]:::changed --&gt; T\n\n  linkStyle 1 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#different-graph",
     "href": "index.html#different-graph",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Different graph",
     "text": "Different graph\n\n\n\n\nflowchart TD\n  C[Buttons] --&gt; T((Text Output))\n  S1[Slider 1] --&gt; T \n  S2[Slider 2] --&gt; T\n\n  linkStyle 1 display:none\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#reactivity-scales",
     "href": "index.html#reactivity-scales",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactivity scales",
     "text": "Reactivity scales\n\nEvery Shiny app uses this pattern\nWorks for dynamic UIs\nLazy and efficient"
   },
   {
     "objectID": "index.html#saving-and-reusing-calculated-values",
     "href": "index.html#saving-and-reusing-calculated-values",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Saving and reusing calculated values",
     "text": "Saving and reusing calculated values\n\nSo far we’ve been working with shallow reactive graphs\n\nInputs are directly consumed by rendering functions\nLimited\nNot that efficient\n\n@reactive.Calc creates calculations whose results are used by other functions\nThis adds depth to the reactive graph"
   },
   {
     "objectID": "index.html#example-model-monitoring",
     "href": "index.html#example-model-monitoring",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Example: Model Monitoring",
     "text": "Example: Model Monitoring"
   },
   {
     "objectID": "index.html#what-do-i-want",
     "href": "index.html#what-do-i-want",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "What do I want?",
     "text": "What do I want?\n\nQuery the database for a sample between dates\nFilter sample by account name in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate a cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#what-do-i-want-1",
     "href": "index.html#what-do-i-want-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "What do I want?",
     "text": "What do I want?\n\n\nQuery the database for a sample between dates\nFilter sample by account id in memory\nSend that data to the plotting functions\nCache the results of 1 and 2\nInvalidate a cache only when upstream inputs change\nDo no thinking or work"
   },
   {
     "objectID": "index.html#reactive-calculations-1",
     "href": "index.html#reactive-calculations-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive calculations",
     "text": "Reactive calculations\n\nDefined with the @reactive.Calc decorator\nCaches its value, so it’s cheap to call repeatedly\nAdds a node to the reactive graph\n\nDiscards cached value when upstream nodes invalidate\nNotifies downstream nodes when it invalidates"
   },
   {
     "objectID": "index.html#reactive-calculation-to-the-rescue",
     "href": "index.html#reactive-calculation-to-the-rescue",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive Calculation to the rescue",
     "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered\n\n    @render.plot():\n    def scores():\n        return plot_scores(filtered_data())"
   },
   {
     "objectID": "index.html#reactive-calculation-to-the-rescue-1",
     "href": "index.html#reactive-calculation-to-the-rescue-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive Calculation to the rescue",
     "text": "Reactive Calculation to the rescue\n   @reactive.Calc\n    def sampled_data():\n        start_date, end_date = input.dates()\n        start_date = pd.to_datetime(start_date)\n        end_date = pd.to_datetime(end_date)\n        return query_db(start_date, end_date, input.sample_size())\n\n    @reactive.Calc()\n    def filtered_data():\n        filtered = sampled_data()\n        filtered = filtered.loc[filtered[\"account\"] == input.account()]\n        return filtered\n\n    @render.plot():\n    def scores():\n        return plot_scores(filtered_data())"
   },
   {
     "objectID": "index.html#initial-state-2",
     "href": "index.html#initial-state-2",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Initial state",
     "text": "Initial state\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#generate-model-scores",
     "href": "index.html#generate-model-scores",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Generate Model Scores",
     "text": "Generate Model Scores\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores)):::changed\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#get-filtered-reactive-calc",
     "href": "index.html#get-filtered-reactive-calc",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get filtered Reactive Calc",
     "text": "Get filtered Reactive Calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}:::changed\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,5 display:none"
   },
   {
     "objectID": "index.html#get-account-input",
     "href": "index.html#get-account-input",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Account input",
     "text": "Get Account input\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]:::changed --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,3,5 display:none"
   },
   {
     "objectID": "index.html#get-sample-reactive-calc",
     "href": "index.html#get-sample-reactive-calc",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Sample Reactive Calc",
     "text": "Get Sample Reactive Calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}:::changed \n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,5 display:none"
   },
   {
     "objectID": "index.html#get-other-inputs",
     "href": "index.html#get-other-inputs",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Other inputs",
     "text": "Get Other inputs\n\n\n\n\nflowchart TD\n  D[Dates]:::changed  --&gt; Sa{{Sample}}\n  S[Sample Size]:::changed  --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#plot-api-responses",
     "href": "index.html#plot-api-responses",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Plot API Responses",
     "text": "Plot API Responses\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse)):::changed \n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#get-filter-reactive-calc",
     "href": "index.html#get-filter-reactive-calc",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Filter reactive calc",
     "text": "Get Filter reactive calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#account-changes-1",
     "href": "index.html#account-changes-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Account changes",
     "text": "Account changes\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]:::changed  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidate-filtered",
     "href": "index.html#invalidate-filtered",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate Filtered",
     "text": "Invalidate Filtered\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}:::changed\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 2,3 display:none"
   },
   {
     "objectID": "index.html#invalidate-plots",
     "href": "index.html#invalidate-plots",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate Plots",
     "text": "Invalidate Plots\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores)):::changed\n  F --&gt; P1((API\\nResponse)):::changed\n  \n  classDef changed fill:#f96\n  linkStyle 2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#calculate-model-scores",
     "href": "index.html#calculate-model-scores",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate model scores",
     "text": "Calculate model scores\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores)):::changed\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#get-filtered-calc",
     "href": "index.html#get-filtered-calc",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get filtered calc",
     "text": "Get filtered calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}:::changed\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 2,3,5 display:none"
   },
   {
     "objectID": "index.html#get-account-and-sample",
     "href": "index.html#get-account-and-sample",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Account and Sample",
     "text": "Get Account and Sample\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]:::changed  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#calculate-api-response",
     "href": "index.html#calculate-api-response",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Calculate API Response",
     "text": "Calculate API Response\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse)):::changed\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#get-filtered-calc-1",
     "href": "index.html#get-filtered-calc-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Filtered Calc",
     "text": "Get Filtered Calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#sample-size-changes",
     "href": "index.html#sample-size-changes",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Sample size changes",
     "text": "Sample size changes\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size]:::changed --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#invalidate-sample",
     "href": "index.html#invalidate-sample",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate Sample",
     "text": "Invalidate Sample\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}:::changed \n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1 display:none"
   },
   {
     "objectID": "index.html#invalidate-filter",
     "href": "index.html#invalidate-filter",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate Filter",
     "text": "Invalidate Filter\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}:::changed \n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3 display:none"
   },
   {
     "objectID": "index.html#invalidate-plots-1",
     "href": "index.html#invalidate-plots-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Invalidate plots",
     "text": "Invalidate plots\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]  --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores)):::changed \n  F --&gt; P1((API\\nResponse)):::changed \n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#initial-state-3",
     "href": "index.html#initial-state-3",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Initial state",
     "text": "Initial state\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#generate-model-scores-1",
     "href": "index.html#generate-model-scores-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Generate Model Scores",
     "text": "Generate Model Scores\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores)):::changed\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,4,5 display:none"
   },
   {
     "objectID": "index.html#get-filtered-reactive-calc-1",
     "href": "index.html#get-filtered-reactive-calc-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get filtered Reactive Calc",
     "text": "Get filtered Reactive Calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}:::changed\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,2,3,5 display:none"
   },
   {
     "objectID": "index.html#get-account-input-1",
     "href": "index.html#get-account-input-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Account input",
     "text": "Get Account input\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account]:::changed --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,3,5 display:none"
   },
   {
     "objectID": "index.html#get-sample-reactive-calc-1",
     "href": "index.html#get-sample-reactive-calc-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Sample Reactive Calc",
     "text": "Get Sample Reactive Calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}:::changed \n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 0,1,5 display:none"
   },
   {
     "objectID": "index.html#get-other-inputs-1",
     "href": "index.html#get-other-inputs-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Other inputs",
     "text": "Get Other inputs\n\n\n\n\nflowchart TD\n  D[Dates]:::changed  --&gt; Sa{{Sample}}\n  S[Sample Size]:::changed  --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#plot-api-responses-1",
     "href": "index.html#plot-api-responses-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Plot API Responses",
     "text": "Plot API Responses\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse)):::changed \n  \n  classDef changed fill:#f96\n  linkStyle 5 display:none"
   },
   {
     "objectID": "index.html#get-filter-reactive-calc-1",
     "href": "index.html#get-filter-reactive-calc-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Get Filter reactive calc",
     "text": "Get Filter reactive calc\n\n\n\n\nflowchart TD\n  D[Dates] --&gt; Sa{{Sample}}\n  S[Sample Size] --&gt; Sa\n  A[Account] --&gt; F\n  Sa --&gt; F{{Filtered}}\n  F --&gt; P2((Model\\nScores))\n  F --&gt; P1((API\\nResponse))\n  \n  classDef changed fill:#f96"
   },
   {
     "objectID": "index.html#events-and-effects",
     "href": "index.html#events-and-effects",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Events and Effects",
     "text": "Events and Effects\n\nReactivity is a great default\nNot everything fits this pattern\n\nYou want to specify when something happens\nYou want to batch inputs\nYou want to trigger a side effect\n\nEvent-driven programming ain’t all bad"
   },
   {
     "objectID": "index.html#example-data-annotation",
     "href": "index.html#example-data-annotation",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Example: Data annotation",
     "text": "Example: Data annotation"
   },
   {
     "objectID": "index.html#what-do-we-want",
     "href": "index.html#what-do-we-want",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "What do we want",
     "text": "What do we want\n\nAnnotation shouldn’t react automatically\nWe want to manually specify what happens when the button is clicked"
   },
   {
     "objectID": "index.html#reactive-effects",
     "href": "index.html#reactive-effects",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive effects",
     "text": "Reactive effects\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#reactive-effect",
     "href": "index.html#reactive-effect",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive effect",
     "text": "Reactive effect\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#reactive-event",
     "href": "index.html#reactive-event",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive event",
     "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\"),"
   },
   {
     "objectID": "index.html#reactive-event-1",
     "href": "index.html#reactive-event-1",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Reactive event",
     "text": "Reactive event\n@reactive.Effect\n@reactive.event(input.is_electronics)\ndef mark_yes():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"electronics\")\n\n@reactive.Effect\n@reactive.event(input.not_electronics)\ndef mark_no():\n    update_annotation(df(), id=selected_row()[\"id\"], annotation=\"not_electronics\")"
   },
   {
     "objectID": "index.html#things-to-note",
     "href": "index.html#things-to-note",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Things to note",
     "text": "Things to note\n\n@reactive.event can be paired with rendering functions and reactive.Calc\nAdds event-driven chocolate chips into the reactive cookie\nUsing reactive.event everywhere is a code smell"
   },
   {
     "objectID": "index.html#side-effects-vs-values",
     "href": "index.html#side-effects-vs-values",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Side effects vs values",
     "text": "Side effects vs values\n\n@reactive.Effect is for side effects:\n\nUpdating a database\nDeploying a model\nWriting a CSV\n\n@reactive.Calc is for values\n\nRunning a calculation\nFetching data from a database\nFiltering a data frame"
   },
   {
     "objectID": "index.html#other-patterns",
     "href": "index.html#other-patterns",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Other patterns",
     "text": "Other patterns\n\nUse reactive.isolate to prevent cycles\nInclude data in reactive graph with reactive.poll\nInclude time with reactive.invalidate_later\nStore things in variables with reactive.Value"
   },
   {
     "objectID": "index.html#summary",
     "href": "index.html#summary",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Summary",
     "text": "Summary\n\nShiny creates performant apps with very little work\nIts algorithm is elegant, but not magic\nYour framework should be able to handle what your users want\nChoose a framework that can grow with your application"
   },
   {
     "objectID": "index.html#thank-you",
     "href": "index.html#thank-you",
-    "title": "How does Shiny work?",
+    "title": "Shiny’s marvelous execution algorithm",
     "section": "Thank you!",
     "text": "Thank you!\nhttps://github.com/gshotwell/shiny-algorithm\n\nShiny for Python"
   }
