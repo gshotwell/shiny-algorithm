@@ -40,7 +40,7 @@ with gr.Blocks() as demo:
     sampled_data = gr.State(None)
     ...
     def plot_metrics(data, metric):
-        if input.metric() == "ROC Curve":
+        if metric == "ROC Curve":
             return plot_auc_curve(data, "is_electronics", "training_score")
         else:
             return plot_precision_recall_curve(
