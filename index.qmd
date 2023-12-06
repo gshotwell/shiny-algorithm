@@ -28,17 +28,10 @@ def include_qmd(path):
     - Often incorrect!
 - Why can't we do it ourselves?
 
-## Example: Feature API
-- Managed feature store metadata
-- Developed by Data Science team
-- Valuable to the whole company
-- Needed a front-end
-
-## What was missing?
-- We needed a framework which could grow
-    - Streamlit looked fragile
-    - Dash seemed awkward
-    - We didn't have any JavaScript developers
+## You need a framework with range
+- Data projects start simple but end complicated
+- Limited frameworks lead to painful refactoring
+- Does your framework solve tomorrow's problems?
 
 ## What is Shiny?
 - Framework for building fast, extensible applications
@@ -47,6 +40,65 @@ def include_qmd(path):
 - Everything you need to build a product
 
 ## Example: Model training
+
+## Gradio implementation
+
+```{.python}
+with gr.Blocks() as demo:
+    sampled_data = gr.State(None)
+    ...
+    def plot_metrics(data, metric):
+        if input.metric() == "ROC Curve":
+            return plot_auc_curve(data, "is_electronics", "training_score")
+        else:
+            return plot_precision_recall_curve(
+                data, "is_electronics", "training_score"
+            )
+
+    account.select(sample_data, [slider], [sampled_data]).then(
+        dist_plot, [sampled_data, log_scale], [tip_plot]
+    ).then(plot_metrics, [sampled_data], [hist_plot])
+
+    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])
+```
+
+## Manual state management
+```{.python code-line-numbers="2"}
+with gr.Blocks#| () as demo:
+    sampled_data = gr.State(None)
+    ...
+    def plot_metrics(data, metric):
+        if input.metric() == "ROC Curve":
+            return plot_auc_curve(data, "is_electronics", "training_score")
+        else:rn plot_precision_recall_curve(    data, "is_electronics", "training_score"
+            )
+
+    account.select(sample_data, [slider], [sampled_data]).then(
+        dist_plot, [sampled_data, log_scale], [tip_plot]
+    ).then(plot_metrics, [sampled_data], [hist_plot])
+
+    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])
+```
+
+## Manual callback management
+```{.python code-line-numbers="12-16"}
+with gr.Blocks() as demo:
+    sampled_data = gr.State(None)
+    ...
+    def plot_metrics(data, metric):
+        if input.metric() == "ROC Curve":
+            return plot_auc_curve(data, "is_electronics", "training_score")
+        else:
+            return plot_precision_recall_curve(
+                data, "is_electronics", "training_score"
+            )
+
+    account.select(sample_data, [slider], [sampled_data]).then(
+        dist_plot, [sampled_data, log_scale], [tip_plot]
+    ).then(plot_metrics, [sampled_data], [hist_plot])
+
+    metric.select(plot_metrics, [sampled_data, log_scale], [tip_plot])
+```
 
 
 ## How did Shiny do that?
@@ -314,6 +366,7 @@ include_qmd("_flip-flop-app.qmd")
     def scores():
         return plot_scores(filtered_data())
 ```
+
 
 ## Reactive Calculation to the rescue
 ```{.python code-line-numbers="2,9,10,16"}

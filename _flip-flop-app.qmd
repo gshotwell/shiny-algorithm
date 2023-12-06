@@ -8,9 +8,15 @@
 def txt():
     random_number = random.randint(0, 100)
     if input.choice() == "Slider 1":
-        return f"Slider 1 is {input.slider_1()}, a random number is {random_number}"
+        return (
+            f"Slider 1 is {input.slider_1()}, "
+            f"a random number is {random_number}"
+        )
     else: 
-        return f"Slider 2 is {input.slider_2()}, a random number is {random_number}"
+        return (
+            f"Slider 2 is {input.slider_2()}, "
+            f"a random number is {random_number}"
+        )
 ```
 
 ## Initial state
