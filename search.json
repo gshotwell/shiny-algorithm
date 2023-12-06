@@ -14,18 +14,11 @@
     "text": "Searching for a framework\n\nData science has a last-mile problem\nYou often have to wait for “real web developers”\n\nExpensive!\nTakes forever!\nOften incorrect!\n\nWhy can’t we do it ourselves?"
   },
   {
-    "objectID": "index.html#example-feature-api",
-    "href": "index.html#example-feature-api",
+    "objectID": "index.html#you-need-a-framework-with-range",
+    "href": "index.html#you-need-a-framework-with-range",
     "title": "How does Shiny work?",
-    "section": "Example: Feature API",
-    "text": "Example: Feature API\n\nManaged feature store metadata\nDeveloped by Data Science team\nValuable to the whole company\nNeeded a front-end"
-  },
-  {
-    "objectID": "index.html#what-was-missing",
-    "href": "index.html#what-was-missing",
-    "title": "How does Shiny work?",
-    "section": "What was missing?",
-    "text": "What was missing?\n\nWe needed a framework which could grow\n\nStreamlit looked fragile\nDash seemed awkward\nWe didn’t have any JavaScript developers"
+    "section": "You need a framework with range",
+    "text": "You need a framework with range\n\nData projects start simple but end complicated\nLimited frameworks lead to painful refactoring\nDoes your framework solve tomorrow’s problems?"
   },
   {
     "objectID": "index.html#what-is-shiny",
@@ -40,6 +33,27 @@
     "title": "How does Shiny work?",
     "section": "Example: Model training",
     "text": "Example: Model training"
+  },
+  {
+    "objectID": "index.html#gradio-implementation",
+    "href": "index.html#gradio-implementation",
+    "title": "How does Shiny work?",
+    "section": "Gradio implementation",
+    "text": "Gradio implementation\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
+  },
+  {
+    "objectID": "index.html#manual-state-management",
+    "href": "index.html#manual-state-management",
+    "title": "How does Shiny work?",
+    "section": "Manual state management",
+    "text": "Manual state management\nwith gr.Blocks#| () as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:rn plot_precision_recall_curve(    data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
+  },
+  {
+    "objectID": "index.html#manual-callback-management",
+    "href": "index.html#manual-callback-management",
+    "title": "How does Shiny work?",
+    "section": "Manual callback management",
+    "text": "Manual callback management\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_metrics, [sampled_data, log_scale], [tip_plot])"
   },
   {
     "objectID": "index.html#how-did-shiny-do-that",
@@ -298,7 +312,7 @@
     "href": "index.html#different-graphs",
     "title": "How does Shiny work?",
     "section": "Different graphs",
-    "text": "Different graphs\n@render.text\ndef txt():\n    random_number = random.randint(0, 100)\n    if input.choice() == \"Slider 1\":\n        return f\"Slider 1 is {input.slider_1()}, a random number is {random_number}\"\n    else: \n        return f\"Slider 2 is {input.slider_2()}, a random number is {random_number}\""
+    "text": "Different graphs\n@render.text\ndef txt():\n    random_number = random.randint(0, 100)\n    if input.choice() == \"Slider 1\":\n        return (\n            f\"Slider 1 is {input.slider_1()}, \"\n            f\"a random number is {random_number}\"\n        )\n    else: \n        return (\n            f\"Slider 2 is {input.slider_2()}, \"\n            f\"a random number is {random_number}\"\n        )"
   },
   {
     "objectID": "index.html#initial-state-1",

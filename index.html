@@ -9,9 +9,9 @@
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.2.2/shinylive/shinylive.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/shinylive-0.2.3/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.2.3/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.2.3/shinylive/shinylive.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.429">
 
@@ -417,24 +417,12 @@
 <li class="fragment">Why can’t we do it ourselves?</li>
 </ul>
 </section>
-<section id="example-feature-api" class="slide level2">
-<h2>Example: Feature API</h2>
+<section id="you-need-a-framework-with-range" class="slide level2">
+<h2>You need a framework with range</h2>
 <ul>
-<li class="fragment">Managed feature store metadata</li>
-<li class="fragment">Developed by Data Science team</li>
-<li class="fragment">Valuable to the whole company</li>
-<li class="fragment">Needed a front-end</li>
-</ul>
-</section>
-<section id="what-was-missing" class="slide level2">
-<h2>What was missing?</h2>
-<ul>
-<li class="fragment">We needed a framework which could grow
-<ul>
-<li class="fragment">Streamlit looked fragile</li>
-<li class="fragment">Dash seemed awkward</li>
-<li class="fragment">We didn’t have any JavaScript developers</li>
-</ul></li>
+<li class="fragment">Data projects start simple but end complicated</li>
+<li class="fragment">Limited frameworks lead to painful refactoring</li>
+<li class="fragment">Does your framework solve tomorrow’s problems?</li>
 </ul>
 </section>
 <section id="what-is-shiny" class="slide level2">
@@ -449,22 +437,77 @@
 <section id="example-model-training" class="slide level2">
 <h2>Example: Model training</h2>
 </section>
+<section id="gradio-implementation" class="slide level2">
+<h2>Gradio implementation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">with</span> gr.Blocks() <span class="im">as</span> demo:</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    sampled_data <span class="op">=</span> gr.State(<span class="va">None</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    ...</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="kw">def</span> plot_metrics(data, metric):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
+<span id="cb1-6"><a href="#cb1-6"></a>            <span class="cf">return</span> plot_auc_curve(data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
+<span id="cb1-9"><a href="#cb1-9"></a>                data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>            )</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    account.select(sample_data, [slider], [sampled_data]).then(</span>
+<span id="cb1-13"><a href="#cb1-13"></a>        dist_plot, [sampled_data, log_scale], [tip_plot]</span>
+<span id="cb1-14"><a href="#cb1-14"></a>    ).then(plot_metrics, [sampled_data], [hist_plot])</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="manual-state-management" class="slide level2">
+<h2>Manual state management</h2>
+<div class="sourceCode" id="cb2" data-code-line-numbers="2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">with</span> gr.Blocks<span class="co">#| () as demo:</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    sampled_data <span class="op">=</span> gr.State(<span class="va">None</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    ...</span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="kw">def</span> plot_metrics(data, metric):</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
+<span id="cb2-6"><a href="#cb2-6"></a>            <span class="cf">return</span> plot_auc_curve(data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>        <span class="cf">else</span>:rn plot_precision_recall_curve(    data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>            )</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    account.select(sample_data, [slider], [sampled_data]).then(</span>
+<span id="cb2-11"><a href="#cb2-11"></a>        dist_plot, [sampled_data, log_scale], [tip_plot]</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    ).then(plot_metrics, [sampled_data], [hist_plot])</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a>    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="manual-callback-management" class="slide level2">
+<h2>Manual callback management</h2>
+<div class="sourceCode" id="cb3" data-code-line-numbers="12-16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="cf">with</span> gr.Blocks() <span class="im">as</span> demo:</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    sampled_data <span class="op">=</span> gr.State(<span class="va">None</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    ...</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="kw">def</span> plot_metrics(data, metric):</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
+<span id="cb3-6"><a href="#cb3-6"></a>            <span class="cf">return</span> plot_auc_curve(data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-8"><a href="#cb3-8"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
+<span id="cb3-9"><a href="#cb3-9"></a>                data, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>            )</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    account.select(sample_data, [slider], [sampled_data]).then(</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        dist_plot, [sampled_data, log_scale], [tip_plot]</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    ).then(plot_metrics, [sampled_data], [hist_plot])</span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    metric.select(plot_metrics, [sampled_data, log_scale], [tip_plot])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="how-did-shiny-do-that" class="slide level2">
 <h2>How did Shiny do that?</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>    <span class="at">@render.plot</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw">def</span> score_dist():</span>
-<span id="cb1-3"><a href="#cb1-3"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb1-4"><a href="#cb1-4"></a>        <span class="cf">return</span> dist_plot(df_filtered)</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a>    <span class="at">@render.plot</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="kw">def</span> metric():</span>
-<span id="cb1-8"><a href="#cb1-8"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb1-9"><a href="#cb1-9"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
-<span id="cb1-10"><a href="#cb1-10"></a>            <span class="cf">return</span> plot_auc_curve(df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-12"><a href="#cb1-12"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
-<span id="cb1-13"><a href="#cb1-13"></a>                df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>    <span class="at">@render.plot</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="kw">def</span> score_dist():</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb4-4"><a href="#cb4-4"></a>        <span class="cf">return</span> dist_plot(df_filtered)</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="at">@render.plot</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="kw">def</span> metric():</span>
+<span id="cb4-8"><a href="#cb4-8"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb4-9"><a href="#cb4-9"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
+<span id="cb4-10"><a href="#cb4-10"></a>            <span class="cf">return</span> plot_auc_curve(df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-12"><a href="#cb4-12"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
+<span id="cb4-13"><a href="#cb4-13"></a>                df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li class="fragment">We told Shiny <em>what</em> to do</li>
 <li class="fragment">We didn’t tell Shiny <em>when</em> to do it</li>
@@ -514,143 +557,143 @@
 </section>
 <section id="how-would-you-do-this" class="slide level2">
 <h2>How would you do this?</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>    <span class="at">@render.plot</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">def</span> score_dist():</span>
-<span id="cb2-3"><a href="#cb2-3"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb2-4"><a href="#cb2-4"></a>        <span class="cf">return</span> dist_plot(df_filtered)</span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a>    <span class="at">@render.plot</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>    <span class="kw">def</span> metric():</span>
-<span id="cb2-8"><a href="#cb2-8"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb2-9"><a href="#cb2-9"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
-<span id="cb2-10"><a href="#cb2-10"></a>            <span class="cf">return</span> plot_auc_curve(df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>        <span class="cf">else</span>:</span>
-<span id="cb2-12"><a href="#cb2-12"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
-<span id="cb2-13"><a href="#cb2-13"></a>                df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>    <span class="at">@render.plot</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="kw">def</span> score_dist():</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        <span class="cf">return</span> dist_plot(df_filtered)</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="at">@render.plot</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="kw">def</span> metric():</span>
+<span id="cb5-8"><a href="#cb5-8"></a>        df_filtered <span class="op">=</span> df[df[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb5-9"><a href="#cb5-9"></a>        <span class="cf">if</span> <span class="bu">input</span>.metric() <span class="op">==</span> <span class="st">"ROC Curve"</span>:</span>
+<span id="cb5-10"><a href="#cb5-10"></a>            <span class="cf">return</span> plot_auc_curve(df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-12"><a href="#cb5-12"></a>            <span class="cf">return</span> plot_precision_recall_curve(</span>
+<span id="cb5-13"><a href="#cb5-13"></a>                df_filtered, <span class="st">"is_electronics"</span>, <span class="st">"training_score"</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="static-code-analysis" class="slide level2">
 <h2>Static code analysis</h2>
-<div class="sourceCode" id="cb3" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>#| standalone: true</span>
-<span id="cb3-2"><a href="#cb3-2"></a>#| components: [viewer]</span>
-<span id="cb3-3"><a href="#cb3-3"></a>#| layout: horizontal</span>
-<span id="cb3-4"><a href="#cb3-4"></a>#| viewerHeight: 500</span>
-<span id="cb3-5"><a href="#cb3-5"></a>import shinyswatch</span>
-<span id="cb3-6"><a href="#cb3-6"></a>from htmltools import css</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a>from shiny import App, module, reactive, render, ui</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a>app_ui = ui.page_fixed(</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    {"class": "my-5"},</span>
-<span id="cb3-12"><a href="#cb3-12"></a>    shinyswatch.theme.minty(),</span>
-<span id="cb3-13"><a href="#cb3-13"></a>    ui.panel_title("Shiny TodoMVC"),</span>
-<span id="cb3-14"><a href="#cb3-14"></a>    ui.layout_sidebar(</span>
-<span id="cb3-15"><a href="#cb3-15"></a>        ui.panel_sidebar(</span>
-<span id="cb3-16"><a href="#cb3-16"></a>            ui.input_text("todo_input_text", "", placeholder="Todo text"),</span>
-<span id="cb3-17"><a href="#cb3-17"></a>            ui.input_action_button("add", "Add to-do"),</span>
-<span id="cb3-18"><a href="#cb3-18"></a>        ),</span>
-<span id="cb3-19"><a href="#cb3-19"></a>        ui.panel_main(</span>
-<span id="cb3-20"><a href="#cb3-20"></a>            ui.output_text("cleared_tasks"),</span>
-<span id="cb3-21"><a href="#cb3-21"></a>            ui.div(id="tasks", style="margin-top: 0.5em"),</span>
-<span id="cb3-22"><a href="#cb3-22"></a>        ),</span>
-<span id="cb3-23"><a href="#cb3-23"></a>    ),</span>
-<span id="cb3-24"><a href="#cb3-24"></a>)</span>
-<span id="cb3-25"><a href="#cb3-25"></a></span>
-<span id="cb3-26"><a href="#cb3-26"></a></span>
-<span id="cb3-27"><a href="#cb3-27"></a>def server(input, output, session):</span>
-<span id="cb3-28"><a href="#cb3-28"></a>    finished_tasks = reactive.Value(0)</span>
-<span id="cb3-29"><a href="#cb3-29"></a>    task_counter = reactive.Value(0)</span>
-<span id="cb3-30"><a href="#cb3-30"></a></span>
-<span id="cb3-31"><a href="#cb3-31"></a>    @output</span>
-<span id="cb3-32"><a href="#cb3-32"></a>    @render.text</span>
-<span id="cb3-33"><a href="#cb3-33"></a>    def cleared_tasks():</span>
-<span id="cb3-34"><a href="#cb3-34"></a>        return f"Finished tasks: {finished_tasks()}"</span>
-<span id="cb3-35"><a href="#cb3-35"></a></span>
-<span id="cb3-36"><a href="#cb3-36"></a>    @reactive.Effect</span>
-<span id="cb3-37"><a href="#cb3-37"></a>    @reactive.event(input.add)</span>
-<span id="cb3-38"><a href="#cb3-38"></a>    def add():</span>
-<span id="cb3-39"><a href="#cb3-39"></a>        counter = task_counter.get() + 1</span>
-<span id="cb3-40"><a href="#cb3-40"></a>        task_counter.set(counter)</span>
-<span id="cb3-41"><a href="#cb3-41"></a>        id = "task_" + str(counter)</span>
-<span id="cb3-42"><a href="#cb3-42"></a>        ui.insert_ui(</span>
-<span id="cb3-43"><a href="#cb3-43"></a>            selector="#tasks",</span>
-<span id="cb3-44"><a href="#cb3-44"></a>            where="beforeEnd",</span>
-<span id="cb3-45"><a href="#cb3-45"></a>            ui=task_ui(id),</span>
-<span id="cb3-46"><a href="#cb3-46"></a>        )</span>
-<span id="cb3-47"><a href="#cb3-47"></a></span>
-<span id="cb3-48"><a href="#cb3-48"></a>        finish = task_server(id, text=input.todo_input_text())</span>
-<span id="cb3-49"><a href="#cb3-49"></a></span>
-<span id="cb3-50"><a href="#cb3-50"></a>        # Defining a nested reactive effect like this might feel a bit funny but it's the</span>
-<span id="cb3-51"><a href="#cb3-51"></a>        # correct pattern in this case. We are reacting to the `finish`</span>
-<span id="cb3-52"><a href="#cb3-52"></a>        # event within the `add` closure, so nesting the reactive effects</span>
-<span id="cb3-53"><a href="#cb3-53"></a>        # means that we don't have to worry about conflicting with</span>
-<span id="cb3-54"><a href="#cb3-54"></a>        # finish events from other task elements.</span>
-<span id="cb3-55"><a href="#cb3-55"></a>        @reactive.Effect</span>
-<span id="cb3-56"><a href="#cb3-56"></a>        @reactive.event(finish)</span>
-<span id="cb3-57"><a href="#cb3-57"></a>        def iterate_counter():</span>
-<span id="cb3-58"><a href="#cb3-58"></a>            finished_tasks.set(finished_tasks.get() + 1)</span>
-<span id="cb3-59"><a href="#cb3-59"></a></span>
-<span id="cb3-60"><a href="#cb3-60"></a>        ui.update_text("todo_input_text", value="")</span>
-<span id="cb3-61"><a href="#cb3-61"></a></span>
-<span id="cb3-62"><a href="#cb3-62"></a></span>
-<span id="cb3-63"><a href="#cb3-63"></a># Modules to define the rows</span>
-<span id="cb3-64"><a href="#cb3-64"></a></span>
-<span id="cb3-65"><a href="#cb3-65"></a></span>
-<span id="cb3-66"><a href="#cb3-66"></a>@module.ui</span>
-<span id="cb3-67"><a href="#cb3-67"></a>def task_ui():</span>
-<span id="cb3-68"><a href="#cb3-68"></a>    return ui.output_ui("button_row")</span>
-<span id="cb3-69"><a href="#cb3-69"></a></span>
-<span id="cb3-70"><a href="#cb3-70"></a></span>
-<span id="cb3-71"><a href="#cb3-71"></a>@module.server</span>
-<span id="cb3-72"><a href="#cb3-72"></a>def task_server(input, output, session, text):</span>
-<span id="cb3-73"><a href="#cb3-73"></a>    finished = reactive.Value(False)</span>
-<span id="cb3-74"><a href="#cb3-74"></a></span>
-<span id="cb3-75"><a href="#cb3-75"></a>    @output</span>
-<span id="cb3-76"><a href="#cb3-76"></a>    @render.ui</span>
-<span id="cb3-77"><a href="#cb3-77"></a>    def button_row():</span>
-<span id="cb3-78"><a href="#cb3-78"></a>        button = None</span>
-<span id="cb3-79"><a href="#cb3-79"></a>        if finished():</span>
-<span id="cb3-80"><a href="#cb3-80"></a>            button = ui.input_action_button("clear", "Clear", class_="btn-warning")</span>
-<span id="cb3-81"><a href="#cb3-81"></a>        else:</span>
-<span id="cb3-82"><a href="#cb3-82"></a>            button = ui.input_action_button("finish", "Finish", class_="btn-default")</span>
-<span id="cb3-83"><a href="#cb3-83"></a></span>
-<span id="cb3-84"><a href="#cb3-84"></a>        return ui.row(</span>
-<span id="cb3-85"><a href="#cb3-85"></a>            ui.column(4, button),</span>
-<span id="cb3-86"><a href="#cb3-86"></a>            ui.column(8, text),</span>
-<span id="cb3-87"><a href="#cb3-87"></a>            class_="mt-3 p-3 border align-items-center",</span>
-<span id="cb3-88"><a href="#cb3-88"></a>            style=css(text_decoration="line-through" if finished() else None),</span>
-<span id="cb3-89"><a href="#cb3-89"></a>        )</span>
-<span id="cb3-90"><a href="#cb3-90"></a></span>
-<span id="cb3-91"><a href="#cb3-91"></a>    @reactive.Effect</span>
-<span id="cb3-92"><a href="#cb3-92"></a>    @reactive.event(input.finish)</span>
-<span id="cb3-93"><a href="#cb3-93"></a>    def finish_task():</span>
-<span id="cb3-94"><a href="#cb3-94"></a>        finished.set(True)</span>
-<span id="cb3-95"><a href="#cb3-95"></a></span>
-<span id="cb3-96"><a href="#cb3-96"></a>    @reactive.Effect</span>
-<span id="cb3-97"><a href="#cb3-97"></a>    @reactive.event(input.clear)</span>
-<span id="cb3-98"><a href="#cb3-98"></a>    def clear_task():</span>
-<span id="cb3-99"><a href="#cb3-99"></a>        ui.remove_ui(selector=f"div#{session.ns('button_row')}")</span>
-<span id="cb3-100"><a href="#cb3-100"></a></span>
-<span id="cb3-101"><a href="#cb3-101"></a>        # Since remove_ui only removes the HTML the reactive effects will be held</span>
-<span id="cb3-102"><a href="#cb3-102"></a>        # in memory unless they're explicitly destroyed. This isn't a big</span>
-<span id="cb3-103"><a href="#cb3-103"></a>        # deal because they're very small, but it's good to clean them up.</span>
-<span id="cb3-104"><a href="#cb3-104"></a>        finish_task.destroy()</span>
-<span id="cb3-105"><a href="#cb3-105"></a>        clear_task.destroy()</span>
-<span id="cb3-106"><a href="#cb3-106"></a></span>
-<span id="cb3-107"><a href="#cb3-107"></a>    # Returning the input.finish button to the parent scope allows us</span>
-<span id="cb3-108"><a href="#cb3-108"></a>    # to react to it in the parent context to keep track of the number of</span>
-<span id="cb3-109"><a href="#cb3-109"></a>    # completed tasks.</span>
-<span id="cb3-110"><a href="#cb3-110"></a>    #</span>
-<span id="cb3-111"><a href="#cb3-111"></a>    # This is a good pattern because it makes the module more general.</span>
-<span id="cb3-112"><a href="#cb3-112"></a>    # The same module can be used by different applications which may</span>
-<span id="cb3-113"><a href="#cb3-113"></a>    # do different things when the task is completed.</span>
-<span id="cb3-114"><a href="#cb3-114"></a>    return input.finish</span>
-<span id="cb3-115"><a href="#cb3-115"></a></span>
-<span id="cb3-116"><a href="#cb3-116"></a></span>
-<span id="cb3-117"><a href="#cb3-117"></a>app = App(app_ui, server)</span>
-<span id="cb3-118"><a href="#cb3-118"></a></span>
-<span id="cb3-119"><a href="#cb3-119"></a>## file: requirements.txt</span>
-<span id="cb3-120"><a href="#cb3-120"></a>shinyswatch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>#| standalone: true</span>
+<span id="cb6-2"><a href="#cb6-2"></a>#| components: [viewer]</span>
+<span id="cb6-3"><a href="#cb6-3"></a>#| layout: horizontal</span>
+<span id="cb6-4"><a href="#cb6-4"></a>#| viewerHeight: 500</span>
+<span id="cb6-5"><a href="#cb6-5"></a>import shinyswatch</span>
+<span id="cb6-6"><a href="#cb6-6"></a>from htmltools import css</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>from shiny import App, module, reactive, render, ui</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>app_ui = ui.page_fixed(</span>
+<span id="cb6-11"><a href="#cb6-11"></a>    {"class": "my-5"},</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    shinyswatch.theme.minty(),</span>
+<span id="cb6-13"><a href="#cb6-13"></a>    ui.panel_title("Shiny TodoMVC"),</span>
+<span id="cb6-14"><a href="#cb6-14"></a>    ui.layout_sidebar(</span>
+<span id="cb6-15"><a href="#cb6-15"></a>        ui.panel_sidebar(</span>
+<span id="cb6-16"><a href="#cb6-16"></a>            ui.input_text("todo_input_text", "", placeholder="Todo text"),</span>
+<span id="cb6-17"><a href="#cb6-17"></a>            ui.input_action_button("add", "Add to-do"),</span>
+<span id="cb6-18"><a href="#cb6-18"></a>        ),</span>
+<span id="cb6-19"><a href="#cb6-19"></a>        ui.panel_main(</span>
+<span id="cb6-20"><a href="#cb6-20"></a>            ui.output_text("cleared_tasks"),</span>
+<span id="cb6-21"><a href="#cb6-21"></a>            ui.div(id="tasks", style="margin-top: 0.5em"),</span>
+<span id="cb6-22"><a href="#cb6-22"></a>        ),</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    ),</span>
+<span id="cb6-24"><a href="#cb6-24"></a>)</span>
+<span id="cb6-25"><a href="#cb6-25"></a></span>
+<span id="cb6-26"><a href="#cb6-26"></a></span>
+<span id="cb6-27"><a href="#cb6-27"></a>def server(input, output, session):</span>
+<span id="cb6-28"><a href="#cb6-28"></a>    finished_tasks = reactive.Value(0)</span>
+<span id="cb6-29"><a href="#cb6-29"></a>    task_counter = reactive.Value(0)</span>
+<span id="cb6-30"><a href="#cb6-30"></a></span>
+<span id="cb6-31"><a href="#cb6-31"></a>    @output</span>
+<span id="cb6-32"><a href="#cb6-32"></a>    @render.text</span>
+<span id="cb6-33"><a href="#cb6-33"></a>    def cleared_tasks():</span>
+<span id="cb6-34"><a href="#cb6-34"></a>        return f"Finished tasks: {finished_tasks()}"</span>
+<span id="cb6-35"><a href="#cb6-35"></a></span>
+<span id="cb6-36"><a href="#cb6-36"></a>    @reactive.Effect</span>
+<span id="cb6-37"><a href="#cb6-37"></a>    @reactive.event(input.add)</span>
+<span id="cb6-38"><a href="#cb6-38"></a>    def add():</span>
+<span id="cb6-39"><a href="#cb6-39"></a>        counter = task_counter.get() + 1</span>
+<span id="cb6-40"><a href="#cb6-40"></a>        task_counter.set(counter)</span>
+<span id="cb6-41"><a href="#cb6-41"></a>        id = "task_" + str(counter)</span>
+<span id="cb6-42"><a href="#cb6-42"></a>        ui.insert_ui(</span>
+<span id="cb6-43"><a href="#cb6-43"></a>            selector="#tasks",</span>
+<span id="cb6-44"><a href="#cb6-44"></a>            where="beforeEnd",</span>
+<span id="cb6-45"><a href="#cb6-45"></a>            ui=task_ui(id),</span>
+<span id="cb6-46"><a href="#cb6-46"></a>        )</span>
+<span id="cb6-47"><a href="#cb6-47"></a></span>
+<span id="cb6-48"><a href="#cb6-48"></a>        finish = task_server(id, text=input.todo_input_text())</span>
+<span id="cb6-49"><a href="#cb6-49"></a></span>
+<span id="cb6-50"><a href="#cb6-50"></a>        # Defining a nested reactive effect like this might feel a bit funny but it's the</span>
+<span id="cb6-51"><a href="#cb6-51"></a>        # correct pattern in this case. We are reacting to the `finish`</span>
+<span id="cb6-52"><a href="#cb6-52"></a>        # event within the `add` closure, so nesting the reactive effects</span>
+<span id="cb6-53"><a href="#cb6-53"></a>        # means that we don't have to worry about conflicting with</span>
+<span id="cb6-54"><a href="#cb6-54"></a>        # finish events from other task elements.</span>
+<span id="cb6-55"><a href="#cb6-55"></a>        @reactive.Effect</span>
+<span id="cb6-56"><a href="#cb6-56"></a>        @reactive.event(finish)</span>
+<span id="cb6-57"><a href="#cb6-57"></a>        def iterate_counter():</span>
+<span id="cb6-58"><a href="#cb6-58"></a>            finished_tasks.set(finished_tasks.get() + 1)</span>
+<span id="cb6-59"><a href="#cb6-59"></a></span>
+<span id="cb6-60"><a href="#cb6-60"></a>        ui.update_text("todo_input_text", value="")</span>
+<span id="cb6-61"><a href="#cb6-61"></a></span>
+<span id="cb6-62"><a href="#cb6-62"></a></span>
+<span id="cb6-63"><a href="#cb6-63"></a># Modules to define the rows</span>
+<span id="cb6-64"><a href="#cb6-64"></a></span>
+<span id="cb6-65"><a href="#cb6-65"></a></span>
+<span id="cb6-66"><a href="#cb6-66"></a>@module.ui</span>
+<span id="cb6-67"><a href="#cb6-67"></a>def task_ui():</span>
+<span id="cb6-68"><a href="#cb6-68"></a>    return ui.output_ui("button_row")</span>
+<span id="cb6-69"><a href="#cb6-69"></a></span>
+<span id="cb6-70"><a href="#cb6-70"></a></span>
+<span id="cb6-71"><a href="#cb6-71"></a>@module.server</span>
+<span id="cb6-72"><a href="#cb6-72"></a>def task_server(input, output, session, text):</span>
+<span id="cb6-73"><a href="#cb6-73"></a>    finished = reactive.Value(False)</span>
+<span id="cb6-74"><a href="#cb6-74"></a></span>
+<span id="cb6-75"><a href="#cb6-75"></a>    @output</span>
+<span id="cb6-76"><a href="#cb6-76"></a>    @render.ui</span>
+<span id="cb6-77"><a href="#cb6-77"></a>    def button_row():</span>
+<span id="cb6-78"><a href="#cb6-78"></a>        button = None</span>
+<span id="cb6-79"><a href="#cb6-79"></a>        if finished():</span>
+<span id="cb6-80"><a href="#cb6-80"></a>            button = ui.input_action_button("clear", "Clear", class_="btn-warning")</span>
+<span id="cb6-81"><a href="#cb6-81"></a>        else:</span>
+<span id="cb6-82"><a href="#cb6-82"></a>            button = ui.input_action_button("finish", "Finish", class_="btn-default")</span>
+<span id="cb6-83"><a href="#cb6-83"></a></span>
+<span id="cb6-84"><a href="#cb6-84"></a>        return ui.row(</span>
+<span id="cb6-85"><a href="#cb6-85"></a>            ui.column(4, button),</span>
+<span id="cb6-86"><a href="#cb6-86"></a>            ui.column(8, text),</span>
+<span id="cb6-87"><a href="#cb6-87"></a>            class_="mt-3 p-3 border align-items-center",</span>
+<span id="cb6-88"><a href="#cb6-88"></a>            style=css(text_decoration="line-through" if finished() else None),</span>
+<span id="cb6-89"><a href="#cb6-89"></a>        )</span>
+<span id="cb6-90"><a href="#cb6-90"></a></span>
+<span id="cb6-91"><a href="#cb6-91"></a>    @reactive.Effect</span>
+<span id="cb6-92"><a href="#cb6-92"></a>    @reactive.event(input.finish)</span>
+<span id="cb6-93"><a href="#cb6-93"></a>    def finish_task():</span>
+<span id="cb6-94"><a href="#cb6-94"></a>        finished.set(True)</span>
+<span id="cb6-95"><a href="#cb6-95"></a></span>
+<span id="cb6-96"><a href="#cb6-96"></a>    @reactive.Effect</span>
+<span id="cb6-97"><a href="#cb6-97"></a>    @reactive.event(input.clear)</span>
+<span id="cb6-98"><a href="#cb6-98"></a>    def clear_task():</span>
+<span id="cb6-99"><a href="#cb6-99"></a>        ui.remove_ui(selector=f"div#{session.ns('button_row')}")</span>
+<span id="cb6-100"><a href="#cb6-100"></a></span>
+<span id="cb6-101"><a href="#cb6-101"></a>        # Since remove_ui only removes the HTML the reactive effects will be held</span>
+<span id="cb6-102"><a href="#cb6-102"></a>        # in memory unless they're explicitly destroyed. This isn't a big</span>
+<span id="cb6-103"><a href="#cb6-103"></a>        # deal because they're very small, but it's good to clean them up.</span>
+<span id="cb6-104"><a href="#cb6-104"></a>        finish_task.destroy()</span>
+<span id="cb6-105"><a href="#cb6-105"></a>        clear_task.destroy()</span>
+<span id="cb6-106"><a href="#cb6-106"></a></span>
+<span id="cb6-107"><a href="#cb6-107"></a>    # Returning the input.finish button to the parent scope allows us</span>
+<span id="cb6-108"><a href="#cb6-108"></a>    # to react to it in the parent context to keep track of the number of</span>
+<span id="cb6-109"><a href="#cb6-109"></a>    # completed tasks.</span>
+<span id="cb6-110"><a href="#cb6-110"></a>    #</span>
+<span id="cb6-111"><a href="#cb6-111"></a>    # This is a good pattern because it makes the module more general.</span>
+<span id="cb6-112"><a href="#cb6-112"></a>    # The same module can be used by different applications which may</span>
+<span id="cb6-113"><a href="#cb6-113"></a>    # do different things when the task is completed.</span>
+<span id="cb6-114"><a href="#cb6-114"></a>    return input.finish</span>
+<span id="cb6-115"><a href="#cb6-115"></a></span>
+<span id="cb6-116"><a href="#cb6-116"></a></span>
+<span id="cb6-117"><a href="#cb6-117"></a>app = App(app_ui, server)</span>
+<span id="cb6-118"><a href="#cb6-118"></a></span>
+<span id="cb6-119"><a href="#cb6-119"></a>## file: requirements.txt</span>
+<span id="cb6-120"><a href="#cb6-120"></a>shinyswatch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="runtime-tracing" class="slide level2">
 <h2>Runtime tracing</h2>
@@ -662,72 +705,72 @@
 </section>
 <section id="user-asks-for-output" class="slide level2">
 <h2>User asks for output</h2>
-<div class="sourceCode" id="cb4" data-code-line-numbers="5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
-<span id="cb4-5"><a href="#cb4-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
-<span id="cb4-6"><a href="#cb4-6"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="at">@render.text</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="kw">def</span> txt():</span>
-<span id="cb4-11"><a href="#cb4-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a></span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="rendering-function-is-triggered" class="slide level2">
-<h2>Rendering function is triggered</h2>
-<div class="sourceCode" id="cb5" data-code-line-numbers="10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
-<span id="cb5-4"><a href="#cb5-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
-<span id="cb5-9"><a href="#cb5-9"></a>    <span class="at">@render.text</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>    <span class="kw">def</span> txt():</span>
-<span id="cb5-11"><a href="#cb5-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a></span>
-<span id="cb5-13"><a href="#cb5-13"></a></span>
-<span id="cb5-14"><a href="#cb5-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="renderer-needs-input" class="slide level2">
-<h2>Renderer needs input</h2>
-<div class="sourceCode" id="cb6" data-code-line-numbers="11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
-<span id="cb6-6"><a href="#cb6-6"></a>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="at">@render.text</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="kw">def</span> txt():</span>
-<span id="cb6-11"><a href="#cb6-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a></span>
-<span id="cb6-13"><a href="#cb6-13"></a></span>
-<span id="cb6-14"><a href="#cb6-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="input-retrieved-from-ui" class="slide level2">
-<h2>Input retrieved from UI</h2>
-<div class="sourceCode" id="cb7" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
+<div class="sourceCode" id="cb7" data-code-line-numbers="5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
 <span id="cb7-4"><a href="#cb7-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
 <span id="cb7-5"><a href="#cb7-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
 <span id="cb7-6"><a href="#cb7-6"></a>)</span>
 <span id="cb7-7"><a href="#cb7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8"></a></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
-<span id="cb7-10"><a href="#cb7-10"></a>    <span class="at">@render.text</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>    <span class="kw">def</span> txt():</span>
-<span id="cb7-12"><a href="#cb7-12"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="at">@render.text</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="kw">def</span> txt():</span>
+<span id="cb7-11"><a href="#cb7-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
 <span id="cb7-13"><a href="#cb7-13"></a></span>
-<span id="cb7-14"><a href="#cb7-14"></a></span>
-<span id="cb7-15"><a href="#cb7-15"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="rendering-function-is-triggered" class="slide level2">
+<h2>Rendering function is triggered</h2>
+<div class="sourceCode" id="cb8" data-code-line-numbers="10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
+<span id="cb8-6"><a href="#cb8-6"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    <span class="at">@render.text</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="kw">def</span> txt():</span>
+<span id="cb8-11"><a href="#cb8-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="renderer-needs-input" class="slide level2">
+<h2>Renderer needs input</h2>
+<div class="sourceCode" id="cb9" data-code-line-numbers="11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    <span class="at">@render.text</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>    <span class="kw">def</span> txt():</span>
+<span id="cb9-11"><a href="#cb9-11"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="input-retrieved-from-ui" class="slide level2">
+<h2>Input retrieved from UI</h2>
+<div class="sourceCode" id="cb10" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">from</span> shiny <span class="im">import</span> Inputs, Outputs, Session, App, render, ui</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>app_ui <span class="op">=</span> ui.page_fluid(</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    ui.input_slider(<span class="st">"n"</span>, <span class="st">"N"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">20</span>),</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    ui.output_text_verbatim(<span class="st">"txt"</span>),</span>
+<span id="cb10-6"><a href="#cb10-6"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="kw">def</span> server(<span class="bu">input</span>: Inputs, output: Outputs, session: Session):</span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="at">@render.text</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="kw">def</span> txt():</span>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="cf">return</span> <span class="ss">f"n*2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>n() <span class="op">*</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a>app <span class="op">=</span> App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-graph" class="slide level2">
 <h2>Reactive graph</h2>
@@ -1120,46 +1163,52 @@
 </section>
 <section id="graphs-can-change" class="slide level2">
 <h2>Graphs can change</h2>
-<div class="sourceCode" id="cb8" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>#| standalone: true</span>
-<span id="cb8-2"><a href="#cb8-2"></a>#| components: [viewer]</span>
-<span id="cb8-3"><a href="#cb8-3"></a>#| layout: horizontal</span>
-<span id="cb8-4"><a href="#cb8-4"></a>#| viewerHeight: 500</span>
-<span id="cb8-5"><a href="#cb8-5"></a>from shiny import Inputs, Outputs, Session, App, reactive, render, req, ui</span>
-<span id="cb8-6"><a href="#cb8-6"></a>import random</span>
-<span id="cb8-7"><a href="#cb8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8"></a>app_ui = ui.page_sidebar(</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    ui.sidebar(</span>
-<span id="cb8-10"><a href="#cb8-10"></a>        ui.input_radio_buttons(</span>
-<span id="cb8-11"><a href="#cb8-11"></a>            "choice", "Which slider?", choices=["Slider 1", "Slider 2"]</span>
-<span id="cb8-12"><a href="#cb8-12"></a>        ),</span>
-<span id="cb8-13"><a href="#cb8-13"></a>        ui.input_slider("slider_1", "Slider 1", 0, 100, 15),</span>
-<span id="cb8-14"><a href="#cb8-14"></a>        ui.input_slider("slider_2", "Slider 2", 0, 100, 45),</span>
-<span id="cb8-15"><a href="#cb8-15"></a>    ),</span>
-<span id="cb8-16"><a href="#cb8-16"></a>    ui.card({"style": "font-size: larger"}, ui.output_text("txt")),</span>
-<span id="cb8-17"><a href="#cb8-17"></a>)</span>
-<span id="cb8-18"><a href="#cb8-18"></a></span>
-<span id="cb8-19"><a href="#cb8-19"></a></span>
-<span id="cb8-20"><a href="#cb8-20"></a>def server(input: Inputs, output: Outputs, session: Session):</span>
-<span id="cb8-21"><a href="#cb8-21"></a>    @render.text</span>
-<span id="cb8-22"><a href="#cb8-22"></a>    def txt():</span>
-<span id="cb8-23"><a href="#cb8-23"></a>        random_number = random.randint(0, 100)</span>
-<span id="cb8-24"><a href="#cb8-24"></a>        if input.choice() == "Slider 1":</span>
-<span id="cb8-25"><a href="#cb8-25"></a>            return f"Slider 1 is {input.slider_1()}, a random number is {random_number}"</span>
-<span id="cb8-26"><a href="#cb8-26"></a>        else:</span>
-<span id="cb8-27"><a href="#cb8-27"></a>            return f"Slider 2 is {input.slider_2()}, a random number is {random_number}"</span>
-<span id="cb8-28"><a href="#cb8-28"></a></span>
-<span id="cb8-29"><a href="#cb8-29"></a></span>
-<span id="cb8-30"><a href="#cb8-30"></a>app = App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11" data-engine="python"><pre class="sourceCode numberSource shinylive-python number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>#| standalone: true</span>
+<span id="cb11-2"><a href="#cb11-2"></a>#| components: [viewer]</span>
+<span id="cb11-3"><a href="#cb11-3"></a>#| layout: horizontal</span>
+<span id="cb11-4"><a href="#cb11-4"></a>#| viewerHeight: 500</span>
+<span id="cb11-5"><a href="#cb11-5"></a>from shiny import Inputs, Outputs, Session, App, reactive, render, req, ui</span>
+<span id="cb11-6"><a href="#cb11-6"></a>import random</span>
+<span id="cb11-7"><a href="#cb11-7"></a></span>
+<span id="cb11-8"><a href="#cb11-8"></a>app_ui = ui.page_sidebar(</span>
+<span id="cb11-9"><a href="#cb11-9"></a>    ui.sidebar(</span>
+<span id="cb11-10"><a href="#cb11-10"></a>        ui.input_radio_buttons(</span>
+<span id="cb11-11"><a href="#cb11-11"></a>            "choice", "Which slider?", choices=["Slider 1", "Slider 2"]</span>
+<span id="cb11-12"><a href="#cb11-12"></a>        ),</span>
+<span id="cb11-13"><a href="#cb11-13"></a>        ui.input_slider("slider_1", "Slider 1", 0, 100, 15),</span>
+<span id="cb11-14"><a href="#cb11-14"></a>        ui.input_slider("slider_2", "Slider 2", 0, 100, 45),</span>
+<span id="cb11-15"><a href="#cb11-15"></a>    ),</span>
+<span id="cb11-16"><a href="#cb11-16"></a>    ui.card({"style": "font-size: larger"}, ui.output_text("txt")),</span>
+<span id="cb11-17"><a href="#cb11-17"></a>)</span>
+<span id="cb11-18"><a href="#cb11-18"></a></span>
+<span id="cb11-19"><a href="#cb11-19"></a></span>
+<span id="cb11-20"><a href="#cb11-20"></a>def server(input: Inputs, output: Outputs, session: Session):</span>
+<span id="cb11-21"><a href="#cb11-21"></a>    @render.text</span>
+<span id="cb11-22"><a href="#cb11-22"></a>    def txt():</span>
+<span id="cb11-23"><a href="#cb11-23"></a>        random_number = random.randint(0, 100)</span>
+<span id="cb11-24"><a href="#cb11-24"></a>        if input.choice() == "Slider 1":</span>
+<span id="cb11-25"><a href="#cb11-25"></a>            return f"Slider 1 is {input.slider_1()}, a random number is {random_number}"</span>
+<span id="cb11-26"><a href="#cb11-26"></a>        else:</span>
+<span id="cb11-27"><a href="#cb11-27"></a>            return f"Slider 2 is {input.slider_2()}, a random number is {random_number}"</span>
+<span id="cb11-28"><a href="#cb11-28"></a></span>
+<span id="cb11-29"><a href="#cb11-29"></a></span>
+<span id="cb11-30"><a href="#cb11-30"></a>app = App(app_ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="different-graphs" class="slide level2">
 <h2>Different graphs</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="at">@render.text</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">def</span> txt():</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    random_number <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="cf">if</span> <span class="bu">input</span>.choice() <span class="op">==</span> <span class="st">"Slider 1"</span>:</span>
-<span id="cb9-5"><a href="#cb9-5"></a>        <span class="cf">return</span> <span class="ss">f"Slider 1 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>slider_1()<span class="sc">}</span><span class="ss">, a random number is </span><span class="sc">{</span>random_number<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>    <span class="cf">else</span>: </span>
-<span id="cb9-7"><a href="#cb9-7"></a>        <span class="cf">return</span> <span class="ss">f"Slider 2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>slider_2()<span class="sc">}</span><span class="ss">, a random number is </span><span class="sc">{</span>random_number<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="at">@render.text</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">def</span> txt():</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    random_number <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="cf">if</span> <span class="bu">input</span>.choice() <span class="op">==</span> <span class="st">"Slider 1"</span>:</span>
+<span id="cb12-5"><a href="#cb12-5"></a>        <span class="cf">return</span> (</span>
+<span id="cb12-6"><a href="#cb12-6"></a>            <span class="ss">f"Slider 1 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>slider_1()<span class="sc">}</span><span class="ss">, "</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>            <span class="ss">f"a random number is </span><span class="sc">{</span>random_number<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>        )</span>
+<span id="cb12-9"><a href="#cb12-9"></a>    <span class="cf">else</span>: </span>
+<span id="cb12-10"><a href="#cb12-10"></a>        <span class="cf">return</span> (</span>
+<span id="cb12-11"><a href="#cb12-11"></a>            <span class="ss">f"Slider 2 is </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>slider_2()<span class="sc">}</span><span class="ss">, "</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>            <span class="ss">f"a random number is </span><span class="sc">{</span>random_number<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="initial-state-1" class="slide level2">
 <h2>Initial state</h2>
@@ -1621,41 +1670,41 @@
 </section>
 <section id="reactive-calculation-to-the-rescue" class="slide level2">
 <h2>Reactive Calculation to the rescue</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>   <span class="at">@reactive.Calc</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>    <span class="kw">def</span> sampled_data():</span>
-<span id="cb10-3"><a href="#cb10-3"></a>        start_date, end_date <span class="op">=</span> <span class="bu">input</span>.dates()</span>
-<span id="cb10-4"><a href="#cb10-4"></a>        start_date <span class="op">=</span> pd.to_datetime(start_date)</span>
-<span id="cb10-5"><a href="#cb10-5"></a>        end_date <span class="op">=</span> pd.to_datetime(end_date)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>        <span class="cf">return</span> query_db(start_date, end_date, <span class="bu">input</span>.sample_size())</span>
-<span id="cb10-7"><a href="#cb10-7"></a></span>
-<span id="cb10-8"><a href="#cb10-8"></a>    <span class="at">@reactive.Calc</span>()</span>
-<span id="cb10-9"><a href="#cb10-9"></a>    <span class="kw">def</span> filtered_data():</span>
-<span id="cb10-10"><a href="#cb10-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
-<span id="cb10-11"><a href="#cb10-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb10-12"><a href="#cb10-12"></a>        <span class="cf">return</span> filtered</span>
-<span id="cb10-13"><a href="#cb10-13"></a></span>
-<span id="cb10-14"><a href="#cb10-14"></a>    <span class="at">@render.plot</span>():</span>
-<span id="cb10-15"><a href="#cb10-15"></a>    <span class="kw">def</span> scores():</span>
-<span id="cb10-16"><a href="#cb10-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>   <span class="at">@reactive.Calc</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="kw">def</span> sampled_data():</span>
+<span id="cb13-3"><a href="#cb13-3"></a>        start_date, end_date <span class="op">=</span> <span class="bu">input</span>.dates()</span>
+<span id="cb13-4"><a href="#cb13-4"></a>        start_date <span class="op">=</span> pd.to_datetime(start_date)</span>
+<span id="cb13-5"><a href="#cb13-5"></a>        end_date <span class="op">=</span> pd.to_datetime(end_date)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>        <span class="cf">return</span> query_db(start_date, end_date, <span class="bu">input</span>.sample_size())</span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="at">@reactive.Calc</span>()</span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="kw">def</span> filtered_data():</span>
+<span id="cb13-10"><a href="#cb13-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
+<span id="cb13-11"><a href="#cb13-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb13-12"><a href="#cb13-12"></a>        <span class="cf">return</span> filtered</span>
+<span id="cb13-13"><a href="#cb13-13"></a></span>
+<span id="cb13-14"><a href="#cb13-14"></a>    <span class="at">@render.plot</span>():</span>
+<span id="cb13-15"><a href="#cb13-15"></a>    <span class="kw">def</span> scores():</span>
+<span id="cb13-16"><a href="#cb13-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="reactive-calculation-to-the-rescue-1" class="slide level2">
 <h2>Reactive Calculation to the rescue</h2>
-<div class="sourceCode" id="cb11" data-code-line-numbers="2,9,10,16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>   <span class="at">@reactive.Calc</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>    <span class="kw">def</span> sampled_data():</span>
-<span id="cb11-3"><a href="#cb11-3"></a>        start_date, end_date <span class="op">=</span> <span class="bu">input</span>.dates()</span>
-<span id="cb11-4"><a href="#cb11-4"></a>        start_date <span class="op">=</span> pd.to_datetime(start_date)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>        end_date <span class="op">=</span> pd.to_datetime(end_date)</span>
-<span id="cb11-6"><a href="#cb11-6"></a>        <span class="cf">return</span> query_db(start_date, end_date, <span class="bu">input</span>.sample_size())</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a>    <span class="at">@reactive.Calc</span>()</span>
-<span id="cb11-9"><a href="#cb11-9"></a>    <span class="kw">def</span> filtered_data():</span>
-<span id="cb11-10"><a href="#cb11-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
-<span id="cb11-11"><a href="#cb11-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
-<span id="cb11-12"><a href="#cb11-12"></a>        <span class="cf">return</span> filtered</span>
-<span id="cb11-13"><a href="#cb11-13"></a></span>
-<span id="cb11-14"><a href="#cb11-14"></a>    <span class="at">@render.plot</span>():</span>
-<span id="cb11-15"><a href="#cb11-15"></a>    <span class="kw">def</span> scores():</span>
-<span id="cb11-16"><a href="#cb11-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14" data-code-line-numbers="2,9,10,16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>   <span class="at">@reactive.Calc</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="kw">def</span> sampled_data():</span>
+<span id="cb14-3"><a href="#cb14-3"></a>        start_date, end_date <span class="op">=</span> <span class="bu">input</span>.dates()</span>
+<span id="cb14-4"><a href="#cb14-4"></a>        start_date <span class="op">=</span> pd.to_datetime(start_date)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>        end_date <span class="op">=</span> pd.to_datetime(end_date)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>        <span class="cf">return</span> query_db(start_date, end_date, <span class="bu">input</span>.sample_size())</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>    <span class="at">@reactive.Calc</span>()</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="kw">def</span> filtered_data():</span>
+<span id="cb14-10"><a href="#cb14-10"></a>        filtered <span class="op">=</span> sampled_data()</span>
+<span id="cb14-11"><a href="#cb14-11"></a>        filtered <span class="op">=</span> filtered.loc[filtered[<span class="st">"account"</span>] <span class="op">==</span> <span class="bu">input</span>.account()]</span>
+<span id="cb14-12"><a href="#cb14-12"></a>        <span class="cf">return</span> filtered</span>
+<span id="cb14-13"><a href="#cb14-13"></a></span>
+<span id="cb14-14"><a href="#cb14-14"></a>    <span class="at">@render.plot</span>():</span>
+<span id="cb14-15"><a href="#cb14-15"></a>    <span class="kw">def</span> scores():</span>
+<span id="cb14-16"><a href="#cb14-16"></a>        <span class="cf">return</span> plot_scores(filtered_data())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="initial-state-2" class="slide level2">
 <h2>Initial state</h2>
@@ -2294,43 +2343,7 @@
 </section>
 <section id="reactive-effects" class="slide level2">
 <h2>Reactive effects</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">def</span> mark_yes():</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5"></a></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">def</span> mark_no():</span>
-<span id="cb12-9"><a href="#cb12-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="reactive-effect" class="slide level2">
-<h2>Reactive effect</h2>
-<div class="sourceCode" id="cb13" data-code-line-numbers="1,3,6,8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">def</span> mark_yes():</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5"></a></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">def</span> mark_no():</span>
-<span id="cb13-9"><a href="#cb13-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="reactive-event" class="slide level2">
-<h2>Reactive event</h2>
-<div class="sourceCode" id="cb14" data-code-line-numbers="2,7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">def</span> mark_yes():</span>
-<span id="cb14-4"><a href="#cb14-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5"></a></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="at">@reactive.Effect</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="kw">def</span> mark_no():</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="reactive-event-1" class="slide level2">
-<h2>Reactive event</h2>
-<div class="sourceCode" id="cb15" data-code-line-numbers="4,9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="at">@reactive.Effect</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="at">@reactive.Effect</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="kw">def</span> mark_yes():</span>
 <span id="cb15-4"><a href="#cb15-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
@@ -2339,6 +2352,42 @@
 <span id="cb15-7"><a href="#cb15-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
 <span id="cb15-8"><a href="#cb15-8"></a><span class="kw">def</span> mark_no():</span>
 <span id="cb15-9"><a href="#cb15-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reactive-effect" class="slide level2">
+<h2>Reactive effect</h2>
+<div class="sourceCode" id="cb16" data-code-line-numbers="1,3,6,8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">def</span> mark_yes():</span>
+<span id="cb16-4"><a href="#cb16-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="kw">def</span> mark_no():</span>
+<span id="cb16-9"><a href="#cb16-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reactive-event" class="slide level2">
+<h2>Reactive event</h2>
+<div class="sourceCode" id="cb17" data-code-line-numbers="2,7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">def</span> mark_yes():</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="kw">def</span> mark_no():</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reactive-event-1" class="slide level2">
+<h2>Reactive event</h2>
+<div class="sourceCode" id="cb18" data-code-line-numbers="4,9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.is_electronics)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="kw">def</span> mark_yes():</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"electronics"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="at">@reactive.Effect</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="at">@reactive.event</span>(<span class="bu">input</span>.not_electronics)</span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="kw">def</span> mark_no():</span>
+<span id="cb18-9"><a href="#cb18-9"></a>    update_annotation(df(), <span class="bu">id</span><span class="op">=</span>selected_row()[<span class="st">"id"</span>], annotation<span class="op">=</span><span class="st">"not_electronics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="things-to-note" class="slide level2">
 <h2>Things to note</h2>
