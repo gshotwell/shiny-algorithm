@@ -20,14 +20,6 @@ def include_qmd(path):
 
 ```
 
-## Searching for a framework
-- Data science has a last-mile problem
-- You often have to wait for "real web developers"
-    - Expensive!
-    - Takes forever!
-    - Often incorrect!
-- Why can't we do it ourselves?
-
 ## You need a framework with range
 - Data projects start simple but end complicated
 - Limited frameworks lead to painful refactoring
