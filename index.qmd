@@ -1,5 +1,5 @@
 ---
-title: "How does Shiny work?"
+title: "Shiny's marvelous execution algorithm"
 format: 
   revealjs:
     incremental: true
