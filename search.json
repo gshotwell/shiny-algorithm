@@ -32,7 +32,7 @@
     "href": "index.html#gradio-implementation",
     "title": "How does Shiny work?",
     "section": "Gradio implementation",
-    "text": "Gradio implementation\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if input.metric() == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
+    "text": "Gradio implementation\nwith gr.Blocks() as demo:\n    sampled_data = gr.State(None)\n    ...\n    def plot_metrics(data, metric):\n        if metric == \"ROC Curve\":\n            return plot_auc_curve(data, \"is_electronics\", \"training_score\")\n        else:\n            return plot_precision_recall_curve(\n                data, \"is_electronics\", \"training_score\"\n            )\n\n    account.select(sample_data, [slider], [sampled_data]).then(\n        dist_plot, [sampled_data, log_scale], [tip_plot]\n    ).then(plot_metrics, [sampled_data], [hist_plot])\n\n    metric.select(plot_tips, [sampled_data, log_scale], [tip_plot])"
   },
   {
     "objectID": "index.html#manual-state-management",
